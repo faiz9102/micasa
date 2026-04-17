@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# pnpm
+.pnpm-store/
+
+# Environment variables
+backend/.env
+.env.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# IDE - JetBrains
+#.idea/
+
+# Operating System
+.DS_Store
+Thumbs.db
