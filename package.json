@@ -1,6 +1,6 @@
 {
   "name": "micasa",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -9,7 +9,9 @@
     "dev:backend": "pnpm -C backend dev",
     "start:backend": "pnpm -C backend start",
     "dev:frontend": "pnpm -C frontend dev",
-    "start:frontend": "pnpm -C frontend start"
+    "start:frontend": "pnpm -C frontend start",
+    "migration:generate": "pnpm --filter backend run migration:generate",
+    "migration:run": "pnpm -C backend migration:run"
   },
   "keywords": [],
   "author": "",
