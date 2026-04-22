@@ -6,12 +6,13 @@ const arg =
   process.argv[2];
 
 const name = arg?.includes("=") ? arg.split("=")[1] : arg;
-const formattedName = name.replace(/\s+/g, "-").toLowerCase();
 
 if (!name) {
   console.error("❌ Please provide a migration name using --name=...");
   process.exit(1);
 }
+
+const formattedName = name.replace(/\s+/g, "-").toLowerCase();
 
 const command = `typeorm migration:generate ./migrations/${formattedName} -d src/configs/data-source.js --outputJs --esm -p`;
 

@@ -2,8 +2,7 @@ import { EntitySchema } from 'typeorm';
 
 export const UserRole = {
   ADMIN: 'admin',
-  LANDLORD: 'landlord',
-  TENANT: 'tenant',
+  USER: 'user',
 };
 
 export const UserSchema = new EntitySchema({
@@ -30,7 +29,11 @@ export const UserSchema = new EntitySchema({
     role: {
       type: 'enum',
       enum: Object.values(UserRole),
-      default: UserRole.TENANT,
+      default: UserRole.USER,
+    },
+    isActive: {
+      type: 'boolean',
+      default: true,
     },
     createdAt: {
       type: 'timestamp',

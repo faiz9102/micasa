@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import app from './app.js';
+import AppDataSource from './configs/data-source.js';
 const PORT = process.env.PORT || 3000;
 
 let server;
@@ -17,6 +18,11 @@ const gracefulShutdown = (origin, error) => {
 
     if (server) {
         server.close(() => {
+            if (AppDataSource.isInitialized) {
+                AppDataSource.destroy().catch((dbError) => {
+                    console.error('Error closing data source:', dbError);
+                });
+            }
             process.exit(error ? 1 : 0);
         });
 
@@ -43,6 +49,10 @@ process.on('unhandledRejection', (reason) => {
 const startServer = async () => {
     try {
         // 1. Start Database Connection
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize();
+            console.log('Data source initialized.');
+        }
 
         // 2. Start Listening
         server = app.listen(PORT, () => {

@@ -10,6 +10,9 @@ importers:
 
   backend:
     dependencies:
+      '@micasa/shared':
+        specifier: workspace:*
+        version: link:../shared
       bcryptjs:
         specifier: ^3.0.3
         version: 3.0.3
@@ -35,6 +38,9 @@ importers:
 
   frontend:
     dependencies:
+      '@micasa/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@reduxjs/toolkit':
         specifier: ^2.11.2
         version: 2.11.2(react-redux@9.2.0(@types/react@19.2.14)(react@19.2.5)(redux@5.0.1))(react@19.2.5)
@@ -102,6 +108,12 @@ importers:
       vite:
         specifier: ^8.0.4
         version: 8.0.8(@types/node@22.19.17)(esbuild@0.27.7)(jiti@2.6.1)
+
+  shared:
+    dependencies:
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
 
 packages:
 

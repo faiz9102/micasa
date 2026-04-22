@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@micasa/backend",
   "version": "0.0.1",
   "description": "backend for micasa",
   "main": "index.js",
@@ -16,6 +16,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
+    "@micasa/shared": "workspace:*",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
