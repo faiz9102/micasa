@@ -1,21 +1,24 @@
 import express from 'express';
-import errorHandler, { AppError } from './middlewares/error.js';
-import accountRoutes from './routes/account.js';
+import v1Router from './routes/v1.js';
+import errorHandler, { AppError } from './middlewares/errorMiddleware.js';
+import { loggerMiddleware } from './middlewares/loggerMiddleware.js';
 
 const app = express();
 
 // --- Global Middlewares ---
+app.use(loggerMiddleware);
 app.use(express.json()); // Body parser for JSON
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/rest/v1/account', accountRoutes);
+// --- Routes ---
+app.use('/rest/v1', v1Router);
 
 // --- Error Handling ---
-app.use((req, res, next) => {
-	next(new AppError(`Route ${req.originalUrl} not found`, 404));
+app.all('/{*any}', (req, res, next) => {
+    next(new AppError(`Route ${req.originalUrl} not found`, 404));
 });
 
-// This must be the last middleware to catch all errors from the routes
+// to catch all errors from the routes
 app.use(errorHandler);
 
 export default app;

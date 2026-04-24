@@ -1,5 +1,23 @@
 {
-    "cryptography" : {
-        "hashCost" : 4
+  "cryptography": {
+    "hashCost": 4
+  },
+  "auth": {
+    "jwt": {
+      "accessTokenExpirationMs": 900000,
+      "refreshTokenExpirationMs": 604800000
+    },
+    "cookie": {
+      "accessTokenName": "accessToken",
+      "refreshTokenName": "refreshToken",
+      "accessTokenOptions": {
+        "httpOnly": true,
+        "path": "/"
+      },
+      "refreshTokenOptions": {
+        "httpOnly": true,
+        "path": "/rest/v1/refresh"
+      }
     }
+  }
 }

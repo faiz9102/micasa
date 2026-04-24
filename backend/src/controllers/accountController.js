@@ -1,88 +1,81 @@
-import AppDataSource from "../configs/data-source.js";
-import User from "../entities/User.js";
-import { hashPassword } from "../utils/crypto.js";
+import {
+  registerUser,
+  deleteUser,
+  updateUser,
+  getAllUsers,
+  getUserById,
+} from "../services/userService.js";
 
-export const getAccount = async (req, res) => {
-  try {
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOneBy({ id: req.params.id });
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+/**
+ * Fetches account information. If userId is provided, it fetches the specific user; otherwise, it retrieves all users.
+ * @param {string|null} userId
+ * @returns {function} Express route handler
+ */
+export const getAccount = function (userId = null) {
+  return async (req, res) => {
+    if (userId) {
+      const result = await getUserById(userId);
+      if (!result.success) {
+        return res.status(404).json({ status: "fail", message: result.message });
+      }
+      return res.json({ status: "success", user: result.user });
     }
 
-    res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    });
-  } catch (error) {
-    console.error("Error fetching account:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+    const result = await getAllUsers();
+    if (!result.success) {
+      return res.status(500).json({ status: "fail", message: result.message });
+    }
+    res.json({ status: "success", users: result.users });
+  };
 };
 
-export const updateAccount = async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOneBy({ id: req.user.id });
+export const createAccount = function (user) {
+  return async (req, res) => {
+    const { name, email, password, role } = user;
+    const result = await registerUser(name, email, password, role);
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    if (!result.success) {
+      return res.status(400).json({ status: "fail", message: result.message });
     }
 
-    user.username = name || user.name;
-    user.email = email || user.email;
+    const { user: createdUser } = result;
 
-    if (password) {
-      user.password = await hashPassword(password);
-    }
-
-    await userRepository.save(user);
-
-    res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    });
-  } catch (error) {
-    console.error("Error updating account:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+    res.status(201).json({ status: "success", user: { id: createdUser.id, name: createdUser.name, email: createdUser.email} });
+  };
 };
 
-export async function createAccount(req, res) {
-    try {
-        const { name, email, password,  type } = req.user;
+export const updateAccount = function (userId, updateData) {
+  return async (req, res) => {
+    const result = await updateUser(userId, updateData);
 
-        const userRepository = AppDataSource.getRepository(User);
-        const existingUser = await userRepository.findOneBy({ email });
-
-        if (existingUser) {
-            return res.status(400).json({ status: "fail", error: "Email already in use" });
-        }
-
-        const hashedPassword = await hashPassword(password);
-
-        const newUser = userRepository.create({
-            name,
-            email,
-            password: hashedPassword,
-            role: type,
-        });
-
-        await userRepository.save(newUser);
-
-        res.status(201).json({
-            id: newUser.id,
-            name: newUser.name,
-            email: newUser.email,
-            role: newUser.role,
-        });
-    } catch (error) {
-        console.error("Error creating account:", error);
-        res.status(500).json({ message: "Internal server error" });
+    if (!result.success) {
+      return res.status(400).json({ status: "fail", message: result.message });
     }
-}
+
+    res.json({ status: "success", user: result.user });
+  };
+};
+
+export const deleteAccount = function (userId) {
+  return async (req, res) => {
+    const result = await deleteUser(userId);
+
+    if (!result.success) {
+      return res.status(404).json({ status: "fail", message: result.message });
+    }
+
+    res.json({ status: "success", message: "User deleted successfully" });
+  };
+};
+
+export const deactivateAccount = function (userId) {
+  return async (req, res) => {
+    const result = await updateUser(userId, { isActive: false });
+
+    if (!result.success) {
+      return res.status(400).json({ status: "fail", message: result.message });
+    }
+
+    res.json({ status: "success", user: result.user });
+  };
+};

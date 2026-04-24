@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import config from '../config.json' with { type: 'json' };
 
 /**
@@ -6,7 +6,7 @@ import config from '../config.json' with { type: 'json' };
  * @param {string} plainTextPassword - The password from the user's request body
  * @returns {Promise<string>} - The securely hashed password
  */
-export const hashPassword = async (plainTextPassword) => {
+export const hash = async (plainTextPassword) => {
   try {
     // 1. Define the "cost factor" (salt rounds).
     // A higher number means more security but also more time to hash.
@@ -21,5 +21,13 @@ export const hashPassword = async (plainTextPassword) => {
     return hashedPassword;
   } catch (error) {
     throw new Error('Error hashing password');
+  }
+};
+
+export const compare = async (plainTextPassword, hashedPassword) => {
+  try {
+    return await bcrypt.compare(plainTextPassword, hashedPassword);
+  } catch (error) {
+    return false;
   }
 };

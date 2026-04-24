@@ -3,4 +3,5 @@ packages:
   - 'frontend'
   - 'shared'
 allowBuilds:
+  bcrypt: true
   esbuild: false

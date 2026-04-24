@@ -1,23 +1,22 @@
 import userschema from "@micasa/shared/validations/user.schema.js";
 import AppDataSource from "../configs/data-source.js";
-import User from "../entities/User.js"
+import User from "../entities/User.js";
 
-const validateAccountCreationRequest = (req, res, next) => {
-  const { name, email, password, type } = req.body;
+export const validateAccountCreationRequest = (req, res, next) => {
+  const { name, email, password, role = "user" } = req.body;
 
-  const result = userschema.safeParse({ name, email, password, type });
+  const result = userschema.safeParse({ name, email, password, role });
 
   if (result.success) {
     req.user = result.data;
     next();
-  }
-  else {
+  } else {
     // TODO : send descriptive error message.
     res.status(400).json({ status: "fail", message: "Invalid form data" });
   }
-}
+};
 
-const validateAccountUpdateRequest = (req, res, next) => {
+export const validateAccountUpdateRequest = (req, res, next) => {
   const id = req.params.id;
 
   if (!id) {
@@ -31,11 +30,8 @@ const validateAccountUpdateRequest = (req, res, next) => {
     }
     req.user = user;
     next();
-  }
-  catch (e) {
+  } catch (e) {
     console.error("Error fetching user:", e?.message);
     res.status(500).json({ status: "fail", message: "Internal server error" });
   }
 };
-
-export default validateAccountCreationRequest;
