@@ -3,8 +3,8 @@ import { getCookie } from "../utils/cookie.js";
 import config from "../config.json" with { type: "json" };
 import { verifyToken } from "../utils/token.js";
 
-export const ACCESS_TOKEN_COOKIE_NAME = config?.auth?.cookie?.accessTokenName;
-export const REFRESH_TOKEN_COOKIE_NAME = config?.auth?.cookie?.refreshTokenName;
+export const ACCESS_TOKEN_COOKIE_NAME = "__HOST" + config?.auth?.cookie?.accessTokenName;
+export const REFRESH_TOKEN_COOKIE_NAME = "__HOST" + config?.auth?.cookie?.refreshTokenName;
 
 export const ACCESS_TOKEN_COOKIE_OPTIONS = {
   ...config?.auth?.cookie?.accessTokenOptions,
