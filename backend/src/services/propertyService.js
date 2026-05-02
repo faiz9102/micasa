@@ -38,3 +38,33 @@ export const getProperties = async (filters = {}) => {
     return { success: false, message: "Internal server error", code: "INTERNAL_ERROR" };
   }
 };
+
+export const updatePropertyById = async (id, updateData) => {
+  try {
+    const updatedProperty = await PropertyRepository.updateProperty(id, updateData);
+
+    if (!updatedProperty) {
+      return { success: false, message: "Property not found", code: "NOT_FOUND" };
+    }
+
+    return { success: true, property: updatedProperty };
+  } catch (error) {
+    console.error("Error updating property:", error);
+    return { success: false, message: "Internal server error", code: "INTERNAL_ERROR" };
+  }
+};
+
+export const deletePropertyById = async (id) => {
+  try {
+    const deleted = await PropertyRepository.deleteProperty(id);
+
+    if (!deleted) {
+      return { success: false, message: "Property not found", code: "NOT_FOUND" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting property:", error);
+    return { success: false, message: "Internal server error", code: "INTERNAL_ERROR" };
+  }
+};

@@ -1,4 +1,4 @@
-import { getProperties, getPropertyById, registerProperty } from "../services/propertyService.js";
+import { deletePropertyById, getProperties, getPropertyById, registerProperty, updatePropertyById } from "../services/propertyService.js";
 
 export const createProperty = () => {
   return async (req, res) => {
@@ -61,5 +61,37 @@ export const getProperty = (id) => {
     }
 
     return res.status(200).json({ status: "success", property: result.property });
+  };
+};
+
+export const updateProperty = (id) => {
+  return async (req, res) => {
+    const result = await updatePropertyById(id, req.property);
+
+    if (!result.success && result.code === "NOT_FOUND") {
+      return res.status(404).json({ status: "fail", message: result.message });
+    }
+
+    if (!result.success) {
+      return res.status(500).json({ status: "fail", message: result.message });
+    }
+
+    return res.status(200).json({ status: "success", property: result.property });
+  };
+};
+
+export const deleteProperty = (id) => {
+  return async (req, res) => {
+    const result = await deletePropertyById(id);
+
+    if (!result.success && result.code === "NOT_FOUND") {
+      return res.status(404).json({ status: "fail", message: result.message });
+    }
+
+    if (!result.success) {
+      return res.status(500).json({ status: "fail", message: result.message });
+    }
+
+    return res.status(200).json({ status: "success", message: "Property deleted" });
   };
 };

@@ -4,8 +4,16 @@ import { validateLoginRequest, authRefreshMiddleware } from "../middlewares/auth
 
 const router = Router();
 
-router.post("/login", validateLoginRequest, (req, res) => {
-  loginUser(req.user)(req, res);
+router.post("/admin/login", validateLoginRequest, (req, res) => {
+  loginUser(req.user, { requireAdmin: true })(req, res);
+});
+
+router.post("/buyer/login", validateLoginRequest, (req, res) => {
+  loginUser(req.user, { disallowAdmin: true, loggedInAsSeller: false })(req, res);
+});
+
+router.post("/seller/login", validateLoginRequest, (req, res) => {
+  loginUser(req.user, { disallowAdmin: true, loggedInAsSeller: true })(req, res);
 });
 
 router.all("/refresh", authRefreshMiddleware, (req, res) => {

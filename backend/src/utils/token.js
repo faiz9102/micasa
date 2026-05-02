@@ -38,7 +38,7 @@ export const getRotatedAccessToken = async (refreshToken) => {
     return null;
   }
 
-  const { id } = decoded;
+  const { id, loggedInAsSeller } = decoded;
 
   const user = await getUserById(id);
   if (!user) {
@@ -50,6 +50,7 @@ export const getRotatedAccessToken = async (refreshToken) => {
     email: user.email,
     name: user.name,
     role: user.role,
+    ...(typeof loggedInAsSeller === "boolean" ? { loggedInAsSeller } : {}),
   };
 
   return generateAccessToken(payload);

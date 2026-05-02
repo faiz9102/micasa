@@ -11,6 +11,28 @@ export const PropertyRepository = AppDataSource.getRepository(Property).extend({
     return this.findOne({ where: { id } });
   },
 
+  async updateProperty(id, updateData) {
+    const existingProperty = await this.findById(id);
+    if (!existingProperty) {
+      return null;
+    }
+
+    return this.save({
+      ...existingProperty,
+      ...updateData,
+    });
+  },
+
+  async deleteProperty(id) {
+    const property = await this.findById(id);
+    if (!property) {
+      return false;
+    }
+
+    await this.remove(property);
+    return true;
+  },
+
   async findWithFilters(filters = {}) {
     const queryBuilder = this.createQueryBuilder("property");
 

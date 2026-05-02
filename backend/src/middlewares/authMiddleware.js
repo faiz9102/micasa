@@ -63,6 +63,42 @@ export const roleBasedAccessControl = (allowedRoles) => {
   };
 };
 
+export const requireBuyerAccess = (req, res, next) => {
+  const user = req?.middleware?.user;
+
+  if (!user?.id) {
+    return res.status(401).json({ status: "fail", message: "Unauthorized" });
+  }
+
+  if (user.role === "admin") {
+    return res.status(403).json({ status: "fail", message: "Forbidden" });
+  }
+
+  if (user.loggedInAsSeller === true) {
+    return res.status(403).json({ status: "fail", message: "Forbidden" });
+  }
+
+  return next();
+};
+
+export const requireSellerAccess = (req, res, next) => {
+  const user = req?.middleware?.user;
+
+  if (!user?.id) {
+    return res.status(401).json({ status: "fail", message: "Unauthorized" });
+  }
+
+  if (user.role === "admin") {
+    return res.status(403).json({ status: "fail", message: "Forbidden" });
+  }
+
+  if (user.loggedInAsSeller !== true) {
+    return res.status(403).json({ status: "fail", message: "Forbidden" });
+  }
+
+  return next();
+};
+
 export const requireAuth = (req, res, next) => {
   const userId = req?.middleware?.user?.id;
 

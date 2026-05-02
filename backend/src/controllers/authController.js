@@ -8,7 +8,7 @@ import {
   REFRESH_TOKEN_COOKIE_OPTIONS,
 } from "../middlewares/authMiddleware.js";
 
-export const loginUser = function (user) {
+export const loginUser = function (user, options = {}) {
   return async (req, res) => {
     const { email, password } = user;
 
@@ -18,15 +18,29 @@ export const loginUser = function (user) {
       return res.status(400).json({ status: "fail", message: result.message });
     }
 
+    if (options.requireAdmin && result.user.role !== "admin") {
+      return res.status(403).json({ status: "fail", message: "Forbidden" });
+    }
+
+    if (options.disallowAdmin && result.user.role === "admin") {
+      return res.status(403).json({ status: "fail", message: "Forbidden" });
+    }
+
+    const loggedInAsSeller = typeof options.loggedInAsSeller === "boolean"
+      ? options.loggedInAsSeller
+      : undefined;
+
     const accessToken = await generateAccessToken({
       id: result.user.id,
       email: result.user.email,
       name: result.user.name,
       role: result.user.role,
+      ...(typeof loggedInAsSeller === "boolean" ? { loggedInAsSeller } : {}),
     });
 
     const refreshToken = await generateRefreshToken({
       id: result.user.id,
+      ...(typeof loggedInAsSeller === "boolean" ? { loggedInAsSeller } : {}),
     });
 
     setCookie(
