@@ -70,7 +70,7 @@ export const refreshToken = function () {
 
     const newAccessToken = await getRotatedAccessToken(refreshToken);
 
-    if (!newAccessToken) {
+    if (!newAccessToken || !refreshToken) {
       return res.status(401).json({ status: "fail", message: "Invalid refresh token" });
     }
 

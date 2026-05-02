@@ -15,8 +15,12 @@ npm-debug.log*
 pnpm-debug.log*
 
 # IDE - JetBrains
-#.idea/
+.idea/**
 
 # Operating System
 .DS_Store
 Thumbs.db
+
+
+# Other
+requirements.jpeg

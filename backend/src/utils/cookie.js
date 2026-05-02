@@ -14,27 +14,35 @@ export function getSignedCookieOptions() {
 }
 
 export function setCookie(res, name, value, options) {
-  res.cookie(name, value, { ...getCookieOptions(), ...options });
+  res.cookie(name, value, {...getCookieOptions(), ...options});
 }
 
 export function setSignedCookie(res, name, value, options) {
-  res.cookie(name, value, { ...getSignedCookieOptions(), ...options });
+  res.cookie(name, value, {...getSignedCookieOptions(), ...options});
 }
 
 export function clearCookie(res, name, options) {
-  res.clearCookie(name, { ...getCookieOptions(), ...options });
+  res.clearCookie(name, {...getCookieOptions(), ...options});
 }
 
 export function clearSignedCookie(res, name, options) {
-  res.clearCookie(name, { ...getSignedCookieOptions(), ...options });
+  res.clearCookie(name, {...getSignedCookieOptions(), ...options});
 }
 
 export function getCookie(req, name) {
-  return req.cookies[name];
+  try {
+    return req.cookies[name];
+  } catch (error) {
+    return null;
+  }
 }
 
 export function getSignedCookie(req, name) {
-  return req.signedCookies[name];
+  try {
+    return req.signedCookies[name];
+  } catch (error) {
+    return null;
+  }
 }
 
 export function getAllCookies(req) {

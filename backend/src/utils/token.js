@@ -54,3 +54,19 @@ export const getRotatedAccessToken = async (refreshToken) => {
 
   return generateAccessToken(payload);
 };
+
+/**
+ * Extracts a Bearer token from an HTTP request object.
+ *
+ * @param {Object} req - The standard HTTP request Express req
+ * @returns {String|null} - The token string, or null if not found/invalid
+ */
+export function parseBearerToken(req) {
+  const authHeader = req.headers?.authorization || req.headers?.['authorization'];
+
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    return authHeader.split(' ')[1];
+  }
+
+  return null;
+}

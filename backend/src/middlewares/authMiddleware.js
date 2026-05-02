@@ -1,7 +1,7 @@
 import { loginSchema } from "@micasa/shared/validations/user.schema.js";
 import { getCookie } from "../utils/cookie.js";
 import config from "../config.json" with { type: "json" };
-import { verifyToken } from "../utils/token.js";
+import { verifyToken, parseBearerToken } from "../utils/token.js";
 
 export const ACCESS_TOKEN_COOKIE_NAME = "__HOST" + config?.auth?.cookie?.accessTokenName;
 export const REFRESH_TOKEN_COOKIE_NAME = "__HOST" + config?.auth?.cookie?.refreshTokenName;
@@ -18,7 +18,7 @@ export const REFRESH_TOKEN_COOKIE_OPTIONS = {
 
 export const authAccessMiddleware = (req, res, next) => {
   try {
-    const accessToken = getCookie(req, ACCESS_TOKEN_COOKIE_NAME);
+    const accessToken = getCookie(req, ACCESS_TOKEN_COOKIE_NAME) || parseBearerToken(req);
 
     if (accessToken) {
       const decoded = verifyToken(accessToken, process.env.JWT_SECRET);
@@ -61,6 +61,16 @@ export const roleBasedAccessControl = (allowedRoles) => {
 
     next();
   };
+};
+
+export const requireAuth = (req, res, next) => {
+  const userId = req?.middleware?.user?.id;
+
+  if (!userId) {
+    return res.status(401).json({ status: "fail", message: "Unauthorized" });
+  }
+
+  return next();
 };
 
 export const validateLoginRequest = (req, res, next) => {
