@@ -2,7 +2,6 @@ import { DataSource } from "typeorm";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
-import UserSchema from "../entities/User.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +17,7 @@ const AppDataSource = new DataSource({
     database: process.env.DB_NAME,
     synchronize: process.env.NODE_ENV === "development", // Enable auto-sync only in development
     logging: false,
-    entities: [UserSchema],
+    entities: [path.resolve(__dirname, "../entities/*.js")],
     migrations: [path.resolve(__dirname, "../../migrations/*.js")],
 });
 
