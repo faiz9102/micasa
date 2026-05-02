@@ -17,7 +17,7 @@
 - **Entry point:** `backend/src/server.js` (includes graceful shutdown handling for SIGTERM, SIGINT, uncaughtException, and unhandledRejection).
 - **Entity Definition:** You MUST use TypeORM's `EntitySchema` API for all entities in `backend/src/entities/`. **NEVER use decorators** (e.g., `@Entity`, `@Column`), as this project does not compile them.
 - **Database Migrations:** - Stored in `backend/migrations/`.
-    - To generate: `pnpm migration:generate --name=<NameOfMigration>` (requires `--name=` flag, generated via `scripts/generate-migration.js`).
+    - To generate: `pnpm migration:generate -- --name=<NameOfMigration>` (run from the repository root; the extra `--` forwards arguments to the backend script which reads `--name=` via `backend/scripts/generate-migration.js`).
     - To run: `pnpm migration:run`.
 - **DB Sync:** `synchronize: true` is enabled in development via `data-source.js`.
 - **Environment Setup:** Copy `backend/.env-sample` to `backend/.env`. Backend runs on port 3000 by default. Required variables:
@@ -64,7 +64,7 @@
     - `utils/` - Shared utility functions
 
 ## 💻 6. Essential Commands (Root Level)
-*Note: You are operating in an Arch Linux environment using the `fish` shell. Format your command suggestions accordingly.*
+*Note: You are operating in Linux environment using the `bash` shell. Format your command suggestions accordingly (run commands from repository root; when forwarding args to workspace scripts use `--`).*
 - `pnpm dev:backend`: Starts backend in dev mode (nodemon).
 - `pnpm dev:frontend`: Starts frontend in dev mode (vite).
 - `pnpm migration:generate`: Generates a new TypeORM migration.
