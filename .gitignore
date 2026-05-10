@@ -8,7 +8,9 @@
 !backend
 !frontend
 !shared
+
 !.github
+!.github/**
 
 !pnpm-lock.yaml
 !pnpm-workspace.yaml
