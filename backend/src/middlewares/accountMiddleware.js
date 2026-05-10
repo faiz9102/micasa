@@ -3,9 +3,9 @@ import AppDataSource from "../configs/data-source.js";
 import User from "../entities/User.js";
 
 export const validateAccountCreationRequest = (req, res, next) => {
-  const { name, email, password, role = "user" } = req.body;
+  const { name, email, password, role = "user", phoneNumber } = req.body;
 
-  const result = userschema.safeParse({ name, email, password, role });
+  const result = userschema.safeParse({ name, email, password, role, phoneNumber });
 
   if (result.success) {
     req.user = result.data;

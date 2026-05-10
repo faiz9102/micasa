@@ -10,7 +10,7 @@ import { UserRole } from "../entities/User.js";
  * @param {string} role - The user's role (optional, defaults to "user")
  * @returns {Promise<Object>} - An object indicating success and newly created user or an error message
  */
-export const registerUser = async (name, email, password, role = UserRole.USER) => {
+export const registerUser = async (name, email, password, role = UserRole.USER, phoneNumber) => {
   try {
     const existingUser = await UserRepository.emailExists(email);
     if (existingUser) {
@@ -23,7 +23,8 @@ export const registerUser = async (name, email, password, role = UserRole.USER) 
       name,
       email,
       password: hashedPassword,
-      role
+      role,
+      phoneNumber,
     });
 
     return { success: true, user: newUser };

@@ -29,9 +29,55 @@ export const getPropertyById = async (id) => {
   }
 };
 
+export const getPropertyByIdWithAccess = async (id, viewerId, viewerRole) => {
+  try {
+    const property = await PropertyRepository.findById(id);
+
+    if (!property) {
+      return { success: false, message: "Property not found", code: "NOT_FOUND" };
+    }
+
+    if (!property.isActive) {
+      const isAdmin = viewerRole === "admin";
+      const isOwner = viewerId && property.ownerId === viewerId;
+
+      if (!isAdmin && !isOwner) {
+        return { success: false, message: "Property not found", code: "NOT_FOUND" };
+      }
+    }
+
+    return { success: true, property };
+  } catch (error) {
+    console.error("Error fetching property by id:", error);
+    return { success: false, message: "Internal server error", code: "INTERNAL_ERROR" };
+  }
+};
+
 export const getProperties = async (filters = {}) => {
   try {
     const properties = await PropertyRepository.findWithFilters(filters);
+    return { success: true, properties };
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+    return { success: false, message: "Internal server error", code: "INTERNAL_ERROR" };
+  }
+};
+
+export const getPropertiesWithAccess = async (filters = {}, viewerId, viewerRole) => {
+  try {
+    const isAdmin = viewerRole === "admin";
+    const isOwnerView = typeof filters.ownerId !== "undefined" && filters.ownerId === viewerId;
+    const hasViewer = Boolean(viewerId);
+
+    const augmentedFilters = {
+      ...filters,
+      ...(!isAdmin && !hasViewer ? { isActive: true } : {}),
+    };
+
+    const properties = await PropertyRepository.findWithFilters(augmentedFilters, {
+      includeOwnerInactive: !isAdmin && hasViewer && !isOwnerView,
+      viewerId,
+    });
     return { success: true, properties };
   } catch (error) {
     console.error("Error fetching properties:", error);
