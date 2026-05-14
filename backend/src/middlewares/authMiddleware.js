@@ -84,6 +84,24 @@ export const requireBuyerAccess = (req, res, next) => {
   return next();
 };
 
+export const requireBuyerOrAdminAccess = (req, res, next) => {
+  const user = req?.middleware?.user;
+
+  if (!user?.id) {
+    return res.status(401).json({ status: "fail", message: "Unauthorized" });
+  }
+
+  if (user.role === "admin") {
+    return next();
+  }
+
+  if (user.loggedInAsSeller === true) {
+    return res.status(403).json({ status: "fail", message: "Forbidden" });
+  }
+
+  return next();
+};
+
 export const requireSellerAccess = (req, res, next) => {
   const user = req?.middleware?.user;
 
@@ -92,7 +110,7 @@ export const requireSellerAccess = (req, res, next) => {
   }
 
   if (user.role === "admin") {
-    return res.status(403).json({ status: "fail", message: "Forbidden" });
+    return next();
   }
 
   if (user.loggedInAsSeller !== true) {

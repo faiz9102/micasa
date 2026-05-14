@@ -19,6 +19,7 @@ const propertySchema = z
     furnishingStatus: furnishingStatusSchema.optional(),
     rentalScope: rentalScopeSchema.optional(),
     floorNumber: z.coerce.number().int().min(0, "Floor number cannot be negative").optional(),
+    isActive: z.boolean().optional(),
   })
   .superRefine((data, ctx) => {
     const isRent = data.purpose === "rent";

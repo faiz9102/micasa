@@ -78,6 +78,7 @@ export const validatePropertyUpdateRequest = async (req, res, next) => {
     furnishingStatus: existingProperty.furnishingStatus,
     rentalScope: existingProperty.rentalScope,
     floorNumber: existingProperty.floorNumber,
+    isActive: existingProperty.isActive,
   };
 
   const result = propertySchema.safeParse({

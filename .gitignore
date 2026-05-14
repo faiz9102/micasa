@@ -1,26 +1,16 @@
-# Dependencies
-node_modules/
+**/**
+!package.json
+!AGENTS.md
+!README.md
+!CHANGELOG.md
+!LICENSE
 
-# pnpm
-.pnpm-store/
+!backend
+!frontend
+!shared
 
-# Environment variables
-backend/.env
-.env.local
+!.github
+!.github/**
 
-# Logs
-logs
-*.log
-npm-debug.log*
-pnpm-debug.log*
-
-# IDE - JetBrains
-.idea/**
-
-# Operating System
-.DS_Store
-Thumbs.db
-
-
-# Other
-requirements.jpeg
+!pnpm-lock.yaml
+!pnpm-workspace.yaml

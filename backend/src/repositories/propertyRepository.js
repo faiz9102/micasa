@@ -1,5 +1,6 @@
 import AppDataSource from "../configs/data-source.js";
 import Property from "../entities/Property.js";
+import { Brackets } from "typeorm";
 
 export const PropertyRepository = AppDataSource.getRepository(Property).extend({
   async createProperty(propertyData) {
@@ -37,8 +38,20 @@ export const PropertyRepository = AppDataSource.getRepository(Property).extend({
     return true;
   },
 
-  async findWithFilters(filters = {}) {
+  async findWithFilters(filters = {}, options = {}) {
     const queryBuilder = this.createQueryBuilder("property");
+
+    if (typeof filters.isActive === "boolean") {
+      queryBuilder.andWhere("property.isActive = :isActive", { isActive: filters.isActive });
+    } else if (options.includeOwnerInactive && options.viewerId) {
+      queryBuilder.andWhere(
+        new Brackets((qb) => {
+          qb.where("property.isActive = true").orWhere("property.ownerId = :viewerId", {
+            viewerId: options.viewerId,
+          });
+        })
+      );
+    }
 
     if (filters.city) {
       queryBuilder.andWhere("LOWER(property.city) = LOWER(:city)", { city: filters.city });
@@ -66,6 +79,10 @@ export const PropertyRepository = AppDataSource.getRepository(Property).extend({
 
     if (typeof filters.maxPrice !== "undefined") {
       queryBuilder.andWhere("property.price <= :maxPrice", { maxPrice: filters.maxPrice });
+    }
+
+    if (filters.ownerId) {
+      queryBuilder.andWhere("property.ownerId = :ownerId", { ownerId: filters.ownerId });
     }
 
     queryBuilder.orderBy("property.createdAt", "DESC");
