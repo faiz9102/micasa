@@ -1,4 +1,4 @@
-import { deletePropertyById, getProperties, getPropertyById, registerProperty, updatePropertyById } from "../services/propertyService.js";
+import { deletePropertyById, getPropertiesWithAccess, getPropertyByIdWithAccess, registerProperty, updatePropertyById } from "../services/propertyService.js";
 
 export const createProperty = () => {
   return async (req, res) => {
@@ -27,8 +27,10 @@ export const listProperties = () => {
       bedrooms,
       propertyType,
       furnishingStatus,
+      ownerId,
     } = req.query;
 
+    const viewer = req?.middleware?.user;
     const filters = {
       ...(city ? { city } : {}),
       ...(propertyType ? { propertyType } : {}),
@@ -36,9 +38,10 @@ export const listProperties = () => {
       ...(typeof bedrooms !== "undefined" ? { bedrooms: Number(bedrooms) } : {}),
       ...(typeof minPrice !== "undefined" ? { minPrice: Number(minPrice) } : {}),
       ...(typeof maxPrice !== "undefined" ? { maxPrice: Number(maxPrice) } : {}),
+      ...(ownerId && (viewer?.role === "admin" || viewer?.id === ownerId) ? { ownerId } : {}),
     };
 
-    const result = await getProperties(filters);
+    const result = await getPropertiesWithAccess(filters, viewer?.id, viewer?.role);
 
     if (!result.success) {
       return res.status(500).json({ status: "fail", message: result.message });
@@ -50,7 +53,8 @@ export const listProperties = () => {
 
 export const getProperty = (id) => {
   return async (req, res) => {
-    const result = await getPropertyById(id);
+    const viewer = req?.middleware?.user;
+    const result = await getPropertyByIdWithAccess(id, viewer?.id, viewer?.role);
 
     if (!result.success && result.code === "NOT_FOUND") {
       return res.status(404).json({ status: "fail", message: result.message });

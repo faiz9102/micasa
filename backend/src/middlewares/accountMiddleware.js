@@ -7,7 +7,7 @@ export const validateAccountCreationRequest = async (req, res, next) => {
   const { name, email, password, role = "user" } = req.body;
   const normalizedRole = role || UserRole.USER;
 
-  const result = userschema.safeParse({ name, email, password, role: normalizedRole });
+  const result = userschema.safeParse({ name, email, password, role });
 
   if (result.success) {
     if (result.data.role === UserRole.ADMIN) {

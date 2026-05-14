@@ -31,8 +31,8 @@ export const getAccount = function (userId = null) {
 
 export const createAccount = function (user) {
   return async (req, res) => {
-    const { name, email, password, role } = user;
-    const result = await registerUser(name, email, password, role);
+    const { name, email, password, role, phoneNumber } = user;
+    const result = await registerUser(name, email, password, role, phoneNumber);
 
     if (!result.success) {
       return res.status(400).json({ status: "fail", message: result.message });
@@ -40,7 +40,15 @@ export const createAccount = function (user) {
 
     const { user: createdUser } = result;
 
-    res.status(201).json({ status: "success", user: { id: createdUser.id, name: createdUser.name, email: createdUser.email} });
+    res.status(201).json({
+      status: "success",
+      user: {
+        id: createdUser.id,
+        name: createdUser.name,
+        email: createdUser.email,
+        phoneNumber: createdUser.phoneNumber,
+      },
+    });
   };
 };
 

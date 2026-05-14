@@ -22,6 +22,11 @@ export const UserSchema = new EntitySchema({
       type: 'varchar',
       unique: true,
     },
+    phoneNumber: {
+      type: 'varchar',
+      nullable: true,
+      length: 11,
+    },
     password: {
       type: 'varchar',
       select: false,
