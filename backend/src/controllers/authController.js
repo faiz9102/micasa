@@ -59,6 +59,7 @@ export const loginUser = function (user, options = {}) {
 
     res.json({
       status: "success",
+      accessToken,
       user: {
         id: result.user.id,
         name: result.user.name,

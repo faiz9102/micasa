@@ -1,13 +1,17 @@
-import { useState } from 'react'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import AppRoutes from './routes/AppRoutes';
+import { hydrateAuth } from './features/auth/authSlice';
 
-  return (
-      <h1 className="text-blue-400 text-5xl font-bold underline">
-        Hello world!
-      </h1>
-  )
-}
+const App = () => {
+  const dispatch = useDispatch();
 
-export default App
+  useEffect(() => {
+    dispatch(hydrateAuth());
+  }, [dispatch]);
+
+  return <AppRoutes />;
+};
+
+export default App;

@@ -1,5 +1,5 @@
 import AppDataSource from "../configs/data-source.js";
-import Users from "../entities/User.js";
+import Users, { UserRole } from "../entities/User.js";
 
 export const UserRepository = AppDataSource.getRepository(Users).extend({
   async emailExists(email) {
@@ -13,6 +13,10 @@ export const UserRepository = AppDataSource.getRepository(Users).extend({
 
   async findInActiveUsers() {
     return this.find({ where: { isActive: false } });
+  },
+
+  async countAdmins() {
+    return this.count({ where: { role: UserRole.ADMIN } });
   },
 
   async createUser(user) {

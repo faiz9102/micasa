@@ -11,6 +11,10 @@ export const PropertyRepository = AppDataSource.getRepository(Property).extend({
     return this.findOne({ where: { id } });
   },
 
+  async findByIdWithOwner(id) {
+    return this.findOne({ where: { id }, relations: { owner: true } });
+  },
+
   async updateProperty(id, updateData) {
     const existingProperty = await this.findById(id);
     if (!existingProperty) {

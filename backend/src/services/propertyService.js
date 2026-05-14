@@ -16,13 +16,17 @@ export const registerProperty = async (ownerId, propertyData) => {
 
 export const getPropertyById = async (id) => {
   try {
-    const property = await PropertyRepository.findById(id);
+    const property = await PropertyRepository.findByIdWithOwner(id);
 
     if (!property) {
       return { success: false, message: "Property not found", code: "NOT_FOUND" };
     }
 
-    return { success: true, property };
+    const owner = property.owner
+      ? { id: property.owner.id, name: property.owner.name, email: property.owner.email }
+      : null;
+
+    return { success: true, property: { ...property, owner } };
   } catch (error) {
     console.error("Error fetching property by id:", error);
     return { success: false, message: "Internal server error", code: "INTERNAL_ERROR" };

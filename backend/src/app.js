@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import v1Router from './routes/v1.js';
 import errorHandler, { AppError } from './middlewares/errorMiddleware.js';
 import { loggerMiddleware } from './middlewares/loggerMiddleware.js';
@@ -8,12 +9,17 @@ const app = express();
 
 // --- Global Middlewares ---
 app.use(loggerMiddleware);
+app.use(cors({
+    origin: [/^http:\/\/localhost:\d+$/],
+    credentials: true,
+}));
 app.use(cookieParser());
 app.use(express.json()); // Body parser for JSON
 app.use(express.urlencoded({ extended: true }));
 
 // --- Routes ---
 app.use('/rest/v1', v1Router);
+app.use('/v1', v1Router);
 
 // --- Error Handling ---
 app.all('/{*any}', (req, res, next) => {
