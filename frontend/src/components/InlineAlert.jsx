@@ -1,14 +1,14 @@
 const InlineAlert = ({ variant = 'info', message }) => {
   const styles = {
-    info: 'border-[#D4A017]/30 text-[#D4A017]',
-    error: 'border-red-500/40 text-red-300',
-    success: 'border-emerald-500/40 text-emerald-200',
+    info: 'border-[var(--mc-primary)]/20 bg-[var(--mc-primary)]/8 text-[var(--mc-primary)]',
+    error: 'border-rose-500/30 bg-rose-500/8 text-rose-700 dark:text-rose-200',
+    success: 'border-emerald-500/30 bg-emerald-500/8 text-emerald-700 dark:text-emerald-200',
   };
 
   if (!message) return null;
 
   return (
-    <div className={`rounded-2xl border bg-white/5 px-4 py-3 text-xs uppercase tracking-[0.3em] ${styles[variant]}`}>
+    <div className={`rounded-2xl border px-4 py-3 text-xs font-semibold uppercase tracking-[0.3em] ${styles[variant]}`}>
       {message}
     </div>
   );

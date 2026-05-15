@@ -8,7 +8,7 @@ const PropertyCard = ({ property }) => {
 
   const content = (
     <>
-      <div className="h-56 w-full overflow-hidden">
+      <div className="relative h-56 w-full overflow-hidden bg-[var(--mc-bg-alt)]">
         {cover ? (
           <img
             src={cover}
@@ -16,28 +16,29 @@ const PropertyCard = ({ property }) => {
             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full items-center justify-center bg-white/5 text-xs uppercase tracking-[0.3em] text-slate-400">
+          <div className="flex h-full items-center justify-center bg-[var(--mc-bg-alt)] text-xs font-semibold uppercase tracking-[0.3em] text-[var(--mc-muted)]">
             No Image
           </div>
         )}
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
       </div>
       <div className="space-y-2 p-6">
-        <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[#D4A017]">
+        <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-primary)]">
           <span>{purposeLabels[property.purpose]}</span>
           <span>{propertyTypeLabels[property.propertyType]}</span>
         </div>
-        <h3 className="font-display text-xl text-white">
+        <h3 className="font-display text-xl text-[var(--mc-text)]">
           {property.city} · {formatCurrency(property.price)}
         </h3>
-        <p className="text-sm text-slate-300/80 line-clamp-2">{property.description}</p>
-        <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400">View details</p>
+        <p className="line-clamp-2 text-sm text-[var(--mc-muted)]">{property.description}</p>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">View details</p>
       </div>
     </>
   );
 
   if (!propertyId) {
     return (
-      <div className="group block overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+      <div className="group block overflow-hidden rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] shadow-sm backdrop-blur-xl">
         {content}
       </div>
     );
@@ -46,7 +47,7 @@ const PropertyCard = ({ property }) => {
   return (
     <Link
       to={`/properties/${propertyId}`}
-      className="group block overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition hover:border-[#D4A017]/60"
+      className="group block overflow-hidden rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[var(--mc-primary)]/40 hover:shadow-[var(--mc-shadow)] backdrop-blur-xl"
     >
       {content}
     </Link>

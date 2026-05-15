@@ -81,9 +81,9 @@ const AdminDashboard = () => {
       </div>
 
       <div className="grid gap-8 xl:grid-cols-[1fr_1.2fr]">
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-xs uppercase tracking-[0.4em] text-[#D4A017]">Create account</p>
-          <h3 className="mt-4 font-display text-2xl text-white">Add a new user or admin.</h3>
+        <div className="rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">Create account</p>
+          <h3 className="mt-4 font-display text-2xl text-[var(--mc-text)]">Add a new user or admin.</h3>
           <form className="mt-6 space-y-4" onSubmit={handleCreate}>
             <InputField label="Name" name="name" value={form.name} onChange={handleChange} required />
             <InputField label="Email" name="email" type="email" value={form.email} onChange={handleChange} required />
@@ -103,23 +103,23 @@ const AdminDashboard = () => {
             {success ? <InlineAlert variant="success" message={success} /> : null}
             <button
               type="submit"
-              className="w-full rounded-full bg-[#D4A017] px-6 py-3 text-xs uppercase tracking-[0.3em] text-[#0B1326] transition hover:bg-[#e9c35e]"
+              className="w-full rounded-full bg-[var(--mc-primary)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
             >
               Create account
             </button>
           </form>
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+        <div className="rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-[#D4A017]">User directory</p>
-              <p className="mt-2 text-sm text-slate-300/80">Track and manage access.</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">User directory</p>
+              <p className="mt-2 text-sm text-[var(--mc-muted)]">Track and manage access.</p>
             </div>
             <button
               type="button"
               onClick={loadUsers}
-              className="rounded-full border border-white/10 px-4 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300"
+              className="rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)]"
             >
               Refresh
             </button>
@@ -134,27 +134,27 @@ const AdminDashboard = () => {
               {users.map((user) => (
                 <div
                   key={user.id}
-                  className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
+                  className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[var(--mc-border)] bg-white/70 px-4 py-3 dark:bg-[var(--mc-surface-strong)]/30"
                 >
                   <div>
-                    <p className="text-sm text-white">{user.name}</p>
-                    <p className="text-xs text-slate-400">{user.email}</p>
+                    <p className="text-sm text-[var(--mc-text)]">{user.name}</p>
+                    <p className="text-xs text-[var(--mc-muted)]">{user.email}</p>
                   </div>
-                  <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-slate-400">
+                  <div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">
                     <span>{user.role}</span>
-                    <span className="text-white/20">•</span>
+                    <span className="text-[var(--mc-muted)]/40">•</span>
                     <span>{user.isActive ? 'Active' : 'Inactive'}</span>
                   </div>
                   <button
                     type="button"
                     onClick={() => handleDeactivate(user.id)}
-                    className="rounded-full border border-white/10 px-4 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300 transition hover:border-[#D4A017] hover:text-white"
+                    className="rounded-full border border-[var(--mc-border)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]"
                   >
                     Deactivate
                   </button>
                 </div>
               ))}
-              {!users.length && <p className="text-sm text-slate-400">No users found.</p>}
+              {!users.length && <p className="text-sm text-[var(--mc-muted)]">No users found.</p>}
             </div>
           )}
         </div>

@@ -85,16 +85,16 @@ const Properties = () => {
   const remainingProperties = nonFavoriteProperties.slice(1);
 
   return (
-    <div className="bg-[#0B1326]">
-      <section className="mx-auto w-full max-w-7xl px-6 py-16">
+    <div className="px-6 py-10 md:py-16">
+      <section className="mx-auto w-full max-w-7xl">
         <SectionHeading
           eyebrow="Portfolio"
           title="Explore refined residences and architectural statements."
-          subtitle="Filter by location, price, or property profile to find the right investment." 
+          subtitle="Filter by location, price, or property profile to find the right investment."
         />
         <form
           onSubmit={handleSubmit}
-          className="mt-10 grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 md:grid-cols-3"
+          className="mt-10 grid gap-4 rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl md:grid-cols-3"
         >
           <InputField
             label="City"
@@ -148,14 +148,14 @@ const Properties = () => {
             <div className="flex flex-wrap gap-3">
               <button
                 type="submit"
-                className="rounded-full bg-[#D4A017] px-6 py-3 text-xs uppercase tracking-[0.3em] text-[#0B1326] transition hover:bg-[#e9c35e]"
+                className="rounded-full bg-[var(--mc-primary)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
               >
                 Apply Filters
               </button>
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="rounded-full border border-white/20 px-6 py-3 text-xs uppercase tracking-[0.3em] text-white/80 transition hover:border-white hover:text-white"
+                className="rounded-full border border-[var(--mc-border)] bg-white/70 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]"
               >
                 Clear Filters
               </button>
@@ -164,7 +164,7 @@ const Properties = () => {
         </form>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-6 pb-20">
+      <section className="mx-auto w-full max-w-7xl pb-20">
         {loading ? (
           <LoadingSpinner label="Loading properties" />
         ) : properties.length ? (
@@ -172,8 +172,8 @@ const Properties = () => {
             {isBuyer && favoriteProperties.length ? (
               <div className="space-y-6">
                 <div className="flex flex-wrap items-center justify-between gap-4">
-                  <h2 className="font-display text-2xl text-white">Your favorites</h2>
-                  <span className="text-xs uppercase tracking-[0.3em] text-slate-400">
+                  <h2 className="font-display text-2xl text-[var(--mc-text)]">Your favorites</h2>
+                  <span className="text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">
                     {favoriteProperties.length} saved
                   </span>
                 </div>

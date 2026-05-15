@@ -1,44 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
 @import "tailwindcss";
 @tailwind utilities;
 
 :root {
 	color-scheme: dark;
-	--mc-navy: #0b1326;
-	--mc-navy-soft: #0f172a;
-	--mc-gold: #d4a017;
-	--mc-white: #ffffff;
-	--mc-gray: #f3f4f6;
-	--mc-charcoal: #1e293b;
+	--mc-bg: #0F2A1D;
+	--mc-bg-alt: #1B4332;
+	--mc-surface: rgba(27, 67, 50, 0.8);
+	--mc-surface-strong: #1B4332;
+	--mc-border: rgba(110, 231, 183, 0.15);
+	--mc-border-strong: rgba(110, 231, 183, 0.25);
+	--mc-text: #ECFDF5;
+	--mc-muted: #86EFAC;
+	--mc-primary: #10B981;
+	--mc-primary-strong: #059669;
+	--mc-accent: #6EE7B7;
+	--mc-accent-soft: rgba(110, 231, 183, 0.14);
+	--mc-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+	--mc-button-text: #04251a;
 }
 
 * {
 	box-sizing: border-box;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	margin: 0;
-	font-family: 'Manrope', sans-serif;
-	background: radial-gradient(circle at top, rgba(15, 23, 42, 0.8), var(--mc-navy));
-	color: var(--mc-white);
+	font-family: 'Inter', sans-serif;
+	background:
+		radial-gradient(circle at top left, rgba(16, 185, 129, 0.1), transparent 40%),
+		radial-gradient(circle at bottom right, rgba(110, 231, 183, 0.08), transparent 35%),
+		linear-gradient(180deg, var(--mc-bg) 0%, var(--mc-bg-alt) 100%);
+	color: var(--mc-text);
 	min-height: 100vh;
+	text-rendering: optimizeLegibility;
 }
 
 img {
 	display: block;
+	max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+}
+
+/* Global button text color: use a dark tone for readability on light buttons */
+button,
+.btn {
+	color: var(--mc-button-text);
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
 }
 
 select,
 select option {
-	background-color: var(--mc-navy-soft);
-	color: var(--mc-gold);
+	background-color: var(--mc-surface-strong);
+	color: var(--mc-text);
 }
 
 .font-display {
-	font-family: 'Cormorant Garamond', serif;
-	letter-spacing: 0.02em;
+	font-family: 'Fraunces', serif;
+	letter-spacing: -0.02em;
 }
 
 ::selection {
-	background: rgba(212, 160, 23, 0.4);
+	background: var(--mc-accent-soft);
+	color: var(--mc-text);
 }

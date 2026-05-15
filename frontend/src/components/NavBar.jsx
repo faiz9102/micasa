@@ -5,8 +5,8 @@ import { logout as logoutAction } from '../features/auth/authSlice.js';
 import { logout as logoutRequest } from '../services/authService.js';
 
 const navLinkClass = ({ isActive }) =>
-  `text-sm tracking-[0.2em] uppercase transition-colors ${
-    isActive ? 'text-[#D4A017]' : 'text-slate-200/80 hover:text-white'
+  `text-[11px] font-semibold uppercase tracking-[0.32em] transition-colors ${
+    isActive ? 'text-[var(--mc-primary)]' : 'text-[var(--mc-muted)] hover:text-[var(--mc-text)]'
   }`;
 
 const NavBar = () => {
@@ -33,9 +33,9 @@ const NavBar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0B1326]/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[var(--mc-border)] bg-[var(--mc-surface)]/90 backdrop-blur-2xl">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4">
-        <Link to="/" className="text-lg font-semibold tracking-[0.4em] uppercase text-white">
+        <Link to="/" className="text-lg font-semibold uppercase tracking-[0.42em] text-[var(--mc-text)]">
           micasa
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
@@ -55,7 +55,7 @@ const NavBar = () => {
               {dashboardPath ? (
                 <Link
                   to={dashboardPath}
-                  className="hidden rounded-full border border-[#D4A017]/50 px-4 py-2 text-xs uppercase tracking-[0.3em] text-[#D4A017] transition hover:border-[#D4A017] hover:text-white md:inline-flex"
+                  className="hidden rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)] md:inline-flex"
                 >
                   Dashboard
                 </Link>
@@ -63,7 +63,7 @@ const NavBar = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="rounded-full bg-[#D4A017] px-4 py-2 text-xs uppercase tracking-[0.3em] text-[#0B1326] transition hover:bg-[#e9c35e]"
+                className="rounded-full bg-[var(--mc-primary)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[var(--mc-primary-strong)]"
               >
                 Logout
               </button>
@@ -72,13 +72,13 @@ const NavBar = () => {
             <>
               <Link
                 to="/login/buyer"
-                className="hidden rounded-full border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white/80 transition hover:border-white hover:text-white md:inline-flex"
+                className="hidden rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)] md:inline-flex"
               >
                 Buyer Login
               </Link>
               <Link
                 to="/login/admin"
-                className="rounded-full bg-[#D4A017] px-4 py-2 text-xs uppercase tracking-[0.3em] text-[#0B1326] transition hover:bg-[#e9c35e]"
+                className="rounded-full bg-[var(--mc-primary)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[var(--mc-primary-strong)]"
               >
                 Admin
               </Link>

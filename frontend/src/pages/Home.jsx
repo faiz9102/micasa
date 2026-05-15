@@ -27,77 +27,107 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-[#0B1326]">
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroImage} alt="Modern residence" className="h-full w-full object-cover opacity-40" />
-          <div className="absolute inset-0 bg-linear-to-r from-[#0B1326] via-[#0B1326]/90 to-transparent" />
-        </div>
-        <div className="relative mx-auto flex min-h-[80vh] w-full max-w-7xl flex-col justify-center px-6 py-16">
-          <p className="text-xs uppercase tracking-[0.4em] text-[#D4A017]">micasa collection</p>
-          <h1 className="mt-6 max-w-3xl font-display text-4xl text-white md:text-6xl">
-            Curated residences with architectural calm and a modern luxury signature.
-          </h1>
-          <p className="mt-6 max-w-2xl text-sm text-slate-300/80">
-            Explore premium properties crafted for discerning lifestyles. We connect buyers, sellers, and investors
-            with trusted guidance and elevated experiences.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Link
-              to="/properties"
-              className="rounded-full bg-[#D4A017] px-6 py-3 text-xs uppercase tracking-[0.3em] text-[#0B1326] transition hover:bg-[#e9c35e]"
-            >
-              View Properties
-            </Link>
-            <Link
-              to="/login/seller"
-              className="rounded-full border border-white/20 px-6 py-3 text-xs uppercase tracking-[0.3em] text-white/80 transition hover:border-white hover:text-white"
-            >
-              List With Us
-            </Link>
-          </div>
-          <div className="mt-16 grid gap-6 md:grid-cols-3">
-            {[
-              { label: 'Global Buyers', value: '3.2K+' },
-              { label: 'Luxury Listings', value: '480+' },
-              { label: 'Avg. Days to Close', value: '18' },
-            ].map((stat) => (
-              <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{stat.label}</p>
-                <p className="mt-4 font-display text-3xl text-white">{stat.value}</p>
+    <div>
+      <section 
+        className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Dark overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/60 to-black/40" />
+        
+        {/* Content */}
+        <div className="relative z-10 w-full px-6 md:px-12">
+          <div className="mx-auto max-w-7xl grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+            <div className="space-y-8 py-12 md:py-20">
+              <div className="inline-flex rounded-full border border-[var(--mc-border)] bg-[var(--mc-surface)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)] shadow-sm backdrop-blur-xl w-fit">
+                Curated living
               </div>
-            ))}
+              <div className="space-y-6">
+                <h1 className="max-w-3xl font-display text-5xl md:text-6xl lg:text-7xl text-[var(--mc-text)] leading-tight">
+                  Find homes with calm architecture and a sharper, modern edge.
+                </h1>
+                <p className="max-w-2xl text-base leading-8 text-[var(--mc-muted)]">
+                  Explore premium properties crafted for discerning lifestyles. We connect buyers, sellers, and investors
+                  with trusted guidance and a more considered presentation.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  to="/properties"
+                  className="rounded-full bg-[var(--mc-primary)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
+                >
+                  View Properties
+                </Link>
+                <Link
+                  to="/login/seller"
+                  className="rounded-full border border-[var(--mc-border)] bg-white/70 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]"
+                >
+                  List With Us
+                </Link>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {[
+                  { label: 'Global Buyers', value: '3.2K+' },
+                  { label: 'Luxury Listings', value: '480+' },
+                  { label: 'Avg. Days to Close', value: '18' },
+                ].map((stat) => (
+                  <div key={stat.label} className="rounded-[1.75rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-5 shadow-sm backdrop-blur-xl">
+                    <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">{stat.label}</p>
+                    <p className="mt-4 font-display text-3xl text-[var(--mc-text)]">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right side info cards - hidden on mobile */}
+            <div className="hidden lg:flex flex-col gap-4 py-20">
+              <div className="rounded-[1.5rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-accent)]">Signature service</p>
+                <p className="mt-3 text-base text-[var(--mc-text)]">Concierge presentation for every listing.</p>
+              </div>
+              <div className="rounded-[1.5rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-accent)]">Trusted network</p>
+                <p className="mt-3 text-base text-[var(--mc-text)]">Verified clients and secure transactions.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-6 py-20">
-        <SectionHeading
-          eyebrow="Featured"
-          title="Signature properties selected for elevated living."
-          subtitle="Our portfolio balances timeless architecture with contemporary comfort, curated by trusted advisors."
-        />
-        <div className="mt-10">
-          {loading ? (
-            <LoadingSpinner label="Loading featured properties" />
-          ) : (
-            <div className="grid gap-8 md:grid-cols-3">
-              {featured.map((property) => (
-                <PropertyCard key={property.id} property={property} />
-              ))}
-              {!featured.length && (
-                <div className="rounded-3xl border border-dashed border-white/10 p-10 text-sm text-slate-400">
-                  Featured listings will appear once properties are added.
-                </div>
-              )}
-            </div>
-          )}
+      {/* Featured section */}
+      <div className="bg-[var(--mc-bg)] px-6 py-8 md:py-12">
+        <div className="mx-auto w-full max-w-7xl">
+          <SectionHeading
+            eyebrow="Featured"
+            title="Signature properties selected for elevated living."
+            subtitle="Our portfolio balances timeless architecture with contemporary comfort, curated by trusted advisors."
+          />
+          <div className="mt-10">
+            {loading ? (
+              <LoadingSpinner label="Loading featured properties" />
+            ) : (
+              <div className="grid gap-8 md:grid-cols-3">
+                {featured.map((property) => (
+                  <PropertyCard key={property.id} property={property} />
+                ))}
+                {!featured.length && (
+                  <div className="rounded-[2rem] border border-dashed border-[var(--mc-border)] bg-[var(--mc-surface)] p-10 text-sm text-[var(--mc-muted)] shadow-sm backdrop-blur-xl">
+                    Featured listings will appear once properties are added.
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </section>
+      </div>
 
-      <section className="border-t border-white/10 bg-[#0F172A]">
-        <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-20 md:grid-cols-[1.2fr_1fr]">
-          <div className="space-y-6">
+      <section className="border-y border-[var(--mc-border)] bg-[var(--mc-surface)]/70 backdrop-blur-xl">
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-0 py-20 md:grid-cols-[1.2fr_1fr]">
+          <div className="space-y-6 px-6">
             <SectionHeading
               eyebrow="Experience"
               title="A calm, confident process from listing to closing."
@@ -110,20 +140,20 @@ const Home = () => {
                 { title: 'Trusted Network', text: 'Verified clients and secure transactions.' },
                 { title: 'Market Intelligence', text: 'Real-time insights for strategic decisions.' },
               ].map((item) => (
-                <div key={item.title} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm font-semibold text-white">{item.title}</p>
-                  <p className="mt-2 text-sm text-slate-300/80">{item.text}</p>
+                <div key={item.title} className="rounded-[1.5rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-5 shadow-sm backdrop-blur-xl">
+                  <p className="text-sm font-semibold text-[var(--mc-text)]">{item.title}</p>
+                  <p className="mt-2 text-sm text-[var(--mc-muted)]">{item.text}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#D4A017]">Services</p>
-            <h3 className="mt-4 font-display text-2xl text-white">Concierge-level support.</h3>
-            <p className="mt-4 text-sm text-slate-300/80">
+          <div className="mx-6 rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-8 shadow-sm backdrop-blur-xl">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">Services</p>
+            <h3 className="mt-4 font-display text-2xl text-[var(--mc-text)]">Concierge-level support.</h3>
+            <p className="mt-4 text-sm leading-7 text-[var(--mc-muted)]">
               From listing strategy to legal documentation, our team ensures every step feels seamless and secure.
             </p>
-            <ul className="mt-6 space-y-3 text-sm text-slate-300">
+            <ul className="mt-6 space-y-3 text-sm text-[var(--mc-text)]">
               <li>• Seller valuation reports</li>
               <li>• Investor portfolio planning</li>
               <li>• End-to-end closing assistance</li>
@@ -131,7 +161,7 @@ const Home = () => {
             </ul>
             <Link
               to="/register"
-              className="mt-8 inline-flex rounded-full border border-[#D4A017] px-5 py-2 text-xs uppercase tracking-[0.3em] text-[#D4A017] transition hover:bg-[#D4A017] hover:text-[#0B1326]"
+              className="mt-8 inline-flex rounded-full bg-[var(--mc-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
             >
               Create account
             </Link>

@@ -62,21 +62,23 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-[#0B1326]">
-      <section className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-16 md:flex-row">
-        <div className="md:w-1/2">
-          <p className="text-xs uppercase tracking-[0.4em] text-[#D4A017]">Secure access</p>
-          <h1 className="mt-6 font-display text-4xl text-white">{loginMeta.label} login</h1>
-          <p className="mt-4 text-sm text-slate-300/80">
+    <div className="px-6 py-10 md:py-16">
+      <section className="mx-auto grid w-full max-w-6xl gap-10 rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-[var(--mc-shadow)] backdrop-blur-xl md:grid-cols-[1fr_1fr] md:p-10">
+        <div className="space-y-6">
+          <div className="inline-flex rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">
+            Secure access
+          </div>
+          <h1 className="font-display text-4xl text-[var(--mc-text)]">{loginMeta.label} login</h1>
+          <p className="max-w-md text-sm leading-7 text-[var(--mc-muted)]">
             Sign in to manage your portfolio, listings, and client experiences.
           </p>
-          <div className="mt-10 space-y-3 text-sm text-slate-300/80">
+          <div className="grid gap-3 text-sm text-[var(--mc-muted)]">
             <p>Buyer access · Discover curated properties.</p>
             <p>Seller access · Create and manage listings.</p>
             <p>Admin access · Oversee accounts and activity.</p>
           </div>
         </div>
-        <div className="w-full rounded-3xl border border-white/10 bg-white/5 p-8 md:w-1/2">
+        <div className="rounded-[1.75rem] border border-[var(--mc-border)] bg-white/85 p-6 shadow-sm dark:bg-[var(--mc-surface-strong)]/35 md:p-8">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <InputField
               label="Email"
@@ -100,14 +102,14 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-full bg-[#D4A017] px-6 py-3 text-xs uppercase tracking-[0.3em] text-[#0B1326] transition hover:bg-[#e9c35e] disabled:opacity-70"
+              className="w-full rounded-full bg-[var(--mc-primary)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)] disabled:opacity-70"
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
-          <div className="mt-8 text-xs uppercase tracking-[0.3em] text-slate-400">
+          <div className="mt-8 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">
             New here?{' '}
-            <Link className="text-[#D4A017]" to="/register">
+            <Link className="text-[var(--mc-primary)]" to="/register">
               Create account
             </Link>
           </div>
@@ -116,7 +118,7 @@ const Login = () => {
               <Link
                 key={linkRole}
                 to={`/login/${linkRole}`}
-                className="rounded-full border border-white/10 px-4 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300 transition hover:border-[#D4A017] hover:text-white"
+                className="rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]"
               >
                 {linkRole}
               </Link>

@@ -121,10 +121,10 @@ const EditProperty = () => {
   const showFloorNumber = isFlat || (isRent && isHouse && form.rentalScope === 'single_floor');
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 px-6 py-10 md:px-0 md:py-16">
       <PageHeader title="Edit listing" subtitle="Refine the details for your property." />
 
-      <form onSubmit={handleSubmit} className="grid gap-6 rounded-3xl border border-white/10 bg-white/5 p-6">
+      <form onSubmit={handleSubmit} className="grid gap-6 rounded-4xl border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
         <div className="grid gap-4 md:grid-cols-2">
           <SelectField label="Property Type" name="propertyType" value={form.propertyType} onChange={handleChange}>
             <option value="flat">Flat</option>
@@ -234,7 +234,7 @@ const EditProperty = () => {
         <button
           type="submit"
           disabled={saving}
-          className="w-full rounded-full bg-[#D4A017] px-6 py-3 text-xs uppercase tracking-[0.3em] text-[#0B1326] transition hover:bg-[#e9c35e] disabled:opacity-70"
+          className="w-full rounded-full bg-(--mc-primary) px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-(--mc-primary-strong) disabled:opacity-70"
         >
           {saving ? 'Saving...' : 'Save changes'}
         </button>

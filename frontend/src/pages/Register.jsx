@@ -35,64 +35,72 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-[#0B1326]">
-      <section className="mx-auto w-full max-w-5xl px-6 py-16">
-        <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-[#D4A017]">Create account</p>
-            <h1 className="mt-6 font-display text-4xl text-white">Join the micasa private network.</h1>
-            <p className="mt-4 text-sm text-slate-300/80">
-              Access curated listings, market intelligence, and personalized advisory support.
-            </p>
+    <div className="px-6 py-10 md:py-16">
+      <section className="mx-auto grid w-full max-w-6xl gap-10 rounded-4xl border-(--mc-border) bg-(--mc-surface) p-6 shadow-(--mc-shadow) backdrop-blur-xl md:grid-cols-[1.05fr_0.95fr] md:p-10">
+        <div className="space-y-6">
+          <div className="inline-flex rounded-full border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">
+            Create account
           </div>
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <InputField
-                label="Full name"
-                name="name"
-                placeholder="Muhammad Ali"
-                value={form.name}
-                onChange={handleChange}
-                required
-              />
-              <InputField
-                label="Email"
-                name="email"
-                type="email"
-                placeholder="you@gmail.com"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
-              <InputField
-                label="Password"
-                name="password"
-                type="password"
-                placeholder="Minimum 8 characters"
-                value={form.password}
-                onChange={handleChange}
-                required
-              />
-              <SelectField label="Account type" name="role" value={form.role} onChange={handleChange}>
-                <option value="user">User</option>
-                <option value="admin" >Admin (first account only)</option>
-              </SelectField>
-              {error ? <InlineAlert variant="error" message={error} /> : null}
-              {success ? <InlineAlert variant="success" message={success} /> : null}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full rounded-full bg-[#D4A017] px-6 py-3 text-xs uppercase tracking-[0.3em] text-[#0B1326] transition hover:bg-[#e9c35e] disabled:opacity-70"
-              >
-                {loading ? 'Creating...' : 'Create account'}
-              </button>
-            </form>
-            <div className="mt-8 text-xs uppercase tracking-[0.3em] text-slate-400">
-              Already have access?{' '}
-              <Link className="text-[#D4A017]" to="/login/buyer">
-                Sign in
-              </Link>
+          <h1 className="font-display text-4xl text-(--mc-text)">Join the micasa private network.</h1>
+          <p className="max-w-md text-sm leading-7 text-(--mc-muted)">
+            Access curated listings, market intelligence, and personalized advisory support.
+          </p>
+          <div className="rounded-3xl border-(--mc-border) bg-(--mc-surface) p-5 shadow-sm backdrop-blur-xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.34em] text-(--mc-muted)">Why join</p>
+            <div className="mt-4 grid gap-3 text-sm text-(--mc-text)">
+              <p>• Private listing access</p>
+              <p>• Tailored market intelligence</p>
+              <p>• Advisory support for buyers and sellers</p>
             </div>
+          </div>
+        </div>
+        <div className="rounded-[1.75rem] border-(--mc-border) bg-white/85 p-6 shadow-sm dark:bg-(--mc-surface-strong)/35 md:p-8">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <InputField
+              label="Full name"
+              name="name"
+              placeholder="Muhammad Ali"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+            <InputField
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="you@gmail.com"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+            <InputField
+              label="Password"
+              name="password"
+              type="password"
+              placeholder="Minimum 8 characters"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+            <SelectField label="Account type" name="role" value={form.role} onChange={handleChange}>
+              <option value="user">User</option>
+              <option value="admin">Admin (first account only)</option>
+            </SelectField>
+            {error ? <InlineAlert variant="error" message={error} /> : null}
+            {success ? <InlineAlert variant="success" message={success} /> : null}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-full bg-(--mc-primary) px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-(--mc-primary-strong) disabled:opacity-70"
+            >
+              {loading ? 'Creating...' : 'Create account'}
+            </button>
+          </form>
+          <div className="mt-8 text-xs font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">
+            Already have access?{' '}
+            <Link className="text-(--mc-primary)" to="/login/buyer">
+              Sign in
+            </Link>
           </div>
         </div>
       </section>
