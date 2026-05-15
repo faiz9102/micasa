@@ -5,14 +5,15 @@ import InputField from '../components/InputField.jsx';
 import SelectField from '../components/SelectField.jsx';
 import InlineAlert from '../components/InlineAlert.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
-import { createAccount, deactivateAccount, listAccounts } from '../services/accountService.js';
+import { createAccount, deactivateAccount, listAccounts, promoteUser } from '../services/accountService.js';
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [promoteForm, setPromoteForm] = useState({ email: '', name: '' });
 
   const loadUsers = async () => {
     setLoading(true);
@@ -45,10 +46,24 @@ const AdminDashboard = () => {
     try {
       await createAccount(form);
       setSuccess('Account created successfully.');
-      setForm({ name: '', email: '', password: '', role: 'user' });
+      setForm({ name: '', email: '', password: '' });
       loadUsers();
     } catch (err) {
       setError('Unable to create account.');
+    }
+  };
+
+  const handlePromote = async (event) => {
+    event.preventDefault();
+    setError('');
+    setSuccess('');
+    try {
+      await promoteUser(promoteForm);
+      setSuccess('User promoted to admin.');
+      setPromoteForm({ email: '', name: '' });
+      loadUsers();
+    } catch (err) {
+      setError('Unable to promote user.');
     }
   };
 
@@ -68,7 +83,7 @@ const AdminDashboard = () => {
   const inactiveUsers = users.filter((user) => !user.isActive).length;
 
   return (
-    <div className="space-y-10">
+    <div className="pt-16 md:pt-0 space-y-10">
       <PageHeader
         title="Admin dashboard"
         subtitle="Monitor user activity, create accounts, and maintain listing integrity."
@@ -80,7 +95,7 @@ const AdminDashboard = () => {
         <StatCard label="Inactive" value={inactiveUsers} />
       </div>
 
-      <div className="grid gap-8 xl:grid-cols-[1fr_1.2fr]">
+      <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
         <div className="rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
           <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">Create account</p>
           <h3 className="mt-4 font-display text-2xl text-[var(--mc-text)]">Add a new user or admin.</h3>
@@ -95,15 +110,12 @@ const AdminDashboard = () => {
               onChange={handleChange}
               required
             />
-            <SelectField label="Role" name="role" value={form.role} onChange={handleChange}>
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </SelectField>
+            {/* Role removed. Admins promote existing users instead of creating admin accounts. */}
             {error ? <InlineAlert variant="error" message={error} /> : null}
             {success ? <InlineAlert variant="success" message={success} /> : null}
             <button
               type="submit"
-              className="w-full rounded-full bg-[var(--mc-primary)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
+              className="w-full rounded-full bg-[var(--mc-primary)] px-4 py-2 sm:px-6 sm:py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
             >
               Create account
             </button>
@@ -111,6 +123,15 @@ const AdminDashboard = () => {
         </div>
 
         <div className="rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
+          <div className="mb-6">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">Promote user</p>
+            <p className="mt-2 text-sm text-[var(--mc-muted)]">Promote an existing user to admin using email or name.</p>
+            <form className="mt-4 flex flex-col sm:flex-row gap-2" onSubmit={handlePromote}>
+              <InputField label="Email" name="email" type="email" value={promoteForm.email} onChange={(e) => setPromoteForm((p) => ({ ...p, email: e.target.value }))} />
+              <InputField label="Name" name="name" value={promoteForm.name} onChange={(e) => setPromoteForm((p) => ({ ...p, name: e.target.value }))} />
+              <button type="submit" className="rounded-full border border-[var(--mc-border)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)]">Promote</button>
+            </form>
+          </div>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">User directory</p>

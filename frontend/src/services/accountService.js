@@ -19,3 +19,8 @@ export const deleteAccount = async () => {
   const response = await apiClient.delete('/account');
   return response.data;
 };
+
+export const promoteUser = async (payload) => {
+  const response = await apiClient.post('/account/promote', payload);
+  return response.data;
+};

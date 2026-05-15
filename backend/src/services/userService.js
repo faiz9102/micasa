@@ -149,3 +149,32 @@ export const getInActiveUsers = async () => {
     return { success: false, message: "Internal server error" };
   }
 };
+
+export const promoteUserToAdmin = async ({ email, name }) => {
+  try {
+    let user = null;
+
+    if (email) {
+      user = await UserRepository.findByEmail(email);
+    }
+
+    if (!user && name) {
+      user = await UserRepository.findByName(name);
+    }
+
+    if (!user) {
+      return { success: false, message: "User not found" };
+    }
+
+    if (user.role === UserRole.ADMIN) {
+      return { success: false, message: "User is already an admin" };
+    }
+
+    user.role = UserRole.ADMIN;
+    const updated = await UserRepository.save(user);
+    return { success: true, user: updated };
+  } catch (error) {
+    console.error("Error promoting user:", error);
+    return { success: false, message: "Internal server error" };
+  }
+};

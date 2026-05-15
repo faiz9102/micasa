@@ -7,6 +7,7 @@ import {
   deactivateAccount,
   deleteAccount
 } from "../controllers/accountController.js";
+import { promoteAccount } from "../controllers/accountController.js";
 import {
   validateAccountCreationRequest,
   validateAccountUpdateRequest,
@@ -32,6 +33,9 @@ router.get(
 );
 
 router.put("/", validateAccountUpdateRequest, updateAccount);
+router.post("/promote", roleBasedAccessControl([UserRole.ADMIN]), (req, res) => {
+  promoteAccount()(req, res);
+});
 router.delete("/:id",roleBasedAccessControl([UserRole.ADMIN]),(req,res) => deactivateAccount(req.params.id)(req,res));
 router.delete("/",roleBasedAccessControl([UserRole.USER]), (req, res) => deleteAccount(req.middleware?.user?.id)(req, res));
 

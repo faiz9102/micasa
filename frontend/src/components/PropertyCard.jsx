@@ -8,7 +8,7 @@ const PropertyCard = ({ property }) => {
 
   const content = (
     <>
-      <div className="relative h-56 w-full overflow-hidden bg-[var(--mc-bg-alt)]">
+      <div className="relative h-44 md:h-56 w-full overflow-hidden bg-[var(--mc-bg-alt)]">
         {cover ? (
           <img
             src={cover}

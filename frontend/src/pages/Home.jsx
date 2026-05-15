@@ -27,7 +27,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="pt-16 md:pt-0">
       <section 
         className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center overflow-hidden"
         style={{
@@ -55,16 +55,16 @@ const Home = () => {
                   with trusted guidance and a more considered presentation.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3">
                 <Link
                   to="/properties"
-                  className="rounded-full bg-[var(--mc-primary)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
+                  className="rounded-full bg-[var(--mc-primary)] px-4 py-2 sm:px-6 sm:py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
                 >
                   View Properties
                 </Link>
                 <Link
                   to="/login/seller"
-                  className="rounded-full border border-[var(--mc-border)] bg-white/70 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]"
+                  className="rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 sm:px-6 sm:py-3 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]"
                 >
                   List With Us
                 </Link>

@@ -29,6 +29,10 @@ export const UserRepository = AppDataSource.getRepository(Users).extend({
     return this.findOne({ where: { email } });
   },
 
+  async findByName(name) {
+    return this.findOne({ where: { name } });
+  },
+
   async findById(id) {
     return this.findOne({ where: { id } });
   },

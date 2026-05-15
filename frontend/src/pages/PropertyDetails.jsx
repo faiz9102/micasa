@@ -86,7 +86,7 @@ const PropertyDetails = () => {
   const contactLabel = contactEmail ? 'Contact seller' : 'Login to contact';
 
   return (
-    <div className="px-6 py-10 md:py-16">
+    <div className="pt-16 md:pt-0 px-6 py-10 md:py-16">
       <section className="mx-auto w-full max-w-6xl">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -104,10 +104,10 @@ const PropertyDetails = () => {
           {(property.imageUrls || []).map((url, index) => (
             <div key={url} className="overflow-hidden rounded-[1.75rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] shadow-sm backdrop-blur-xl">
               <img
-                src={url}
-                alt={`${property.city} ${index + 1}`}
-                className="h-60 w-full object-cover"
-              />
+                  src={url}
+                  alt={`${property.city} ${index + 1}`}
+                  className="h-44 md:h-60 w-full object-cover"
+                />
             </div>
           ))}
           {!property.imageUrls?.length && (

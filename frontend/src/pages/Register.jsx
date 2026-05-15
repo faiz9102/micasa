@@ -7,7 +7,7 @@ import { createAccount } from '../services/accountService.js';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -35,7 +35,7 @@ const Register = () => {
   };
 
   return (
-    <div className="px-6 py-10 md:py-16">
+    <div className="pt-16 md:pt-0 px-6 py-10 md:py-16">
       <section className="mx-auto grid w-full max-w-6xl gap-10 rounded-4xl border-(--mc-border) bg-(--mc-surface) p-6 shadow-(--mc-shadow) backdrop-blur-xl md:grid-cols-[1.05fr_0.95fr] md:p-10">
         <div className="space-y-6">
           <div className="inline-flex rounded-full border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">
@@ -82,16 +82,13 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-            <SelectField label="Account type" name="role" value={form.role} onChange={handleChange}>
-              <option value="user">User</option>
-              <option value="admin">Admin (first account only)</option>
-            </SelectField>
+            {/* Role selection removed — registrations are users by default */}
             {error ? <InlineAlert variant="error" message={error} /> : null}
             {success ? <InlineAlert variant="success" message={success} /> : null}
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-full bg-(--mc-primary) px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-(--mc-primary-strong) disabled:opacity-70"
+              className="w-full rounded-full bg-(--mc-primary) px-4 py-2 sm:px-6 sm:py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-(--mc-primary-strong) disabled:opacity-70"
             >
               {loading ? 'Creating...' : 'Create account'}
             </button>
