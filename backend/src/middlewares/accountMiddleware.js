@@ -3,7 +3,7 @@ import AppDataSource from "../configs/data-source.js";
 import User, { UserRole } from "../entities/User.js";
 import { UserRepository } from "../repositories/userRepository.js";
 
-export const validateAccountCreationRequest = async (req, res, next) => {
+export const validateUserAccountCreationRequest = async (req, res, next) => {
   const { name, email, password, phoneNumber } = req.body;
 
   // Enforce role as USER for all registrations initiated from the public form.

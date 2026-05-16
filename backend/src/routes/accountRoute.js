@@ -9,14 +9,19 @@ import {
 } from "../controllers/accountController.js";
 import { promoteAccount } from "../controllers/accountController.js";
 import {
-  validateAccountCreationRequest,
+  validateUserAccountCreationRequest,
   validateAccountUpdateRequest,
 } from "../middlewares/accountMiddleware.js";
 import { roleBasedAccessControl } from "../middlewares/authMiddleware.js";
 
 const router = app.Router();
 
-router.post("/", validateAccountCreationRequest, (req, res) => {
+router.post("/", validateUserAccountCreationRequest, (req, res) => {
+  createAccount(req.user)(req, res);
+});
+
+router.post("/admin", roleBasedAccessControl([UserRole.ADMIN]), validateUserAccountCreationRequest, (req, res) => {
+  req.user.role = UserRole.ADMIN; // Ensure role is set to ADMIN for this route
   createAccount(req.user)(req, res);
 });
 
