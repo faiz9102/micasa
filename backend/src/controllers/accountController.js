@@ -16,7 +16,9 @@ export const getAccount = function (userId = null) {
     if (userId) {
       const result = await getUserById(userId);
       if (!result.success) {
-        return res.status(404).json({ status: "fail", message: result.message });
+        return res
+          .status(404)
+          .json({ status: "fail", message: result.message });
       }
       return res.json({ status: "success", user: result.user });
     }
@@ -52,23 +54,27 @@ export const createAccount = function (user) {
   };
 };
 
-  export const promoteAccount = function () {
-    return async (req, res) => {
-      const { email, name } = req.body;
+export const promoteAccount = function () {
+  return async (req, res) => {
+    const { email, name } = req.body;
 
-      if (!email && !name) {
-        return res.status(400).json({ status: "fail", message: "Provide email or name to promote" });
-      }
+    if (!email && !name) {
+      return res
+        .status(400)
+        .json({ status: "fail", message: "Provide email or name to promote" });
+    }
 
-      const result = await (await import("../services/userService.js")).promoteUserToAdmin({ email, name });
+    const result = await (
+      await import("../services/userService.js")
+    ).promoteUserToAdmin({ email, name });
 
-      if (!result.success) {
-        return res.status(400).json({ status: "fail", message: result.message });
-      }
+    if (!result.success) {
+      return res.status(400).json({ status: "fail", message: result.message });
+    }
 
-      res.json({ status: "success", user: result.user });
-    };
+    res.json({ status: "success", user: result.user });
   };
+};
 
 export const updateAccount = function (userId, updateData) {
   return async (req, res) => {

@@ -9,7 +9,8 @@
     "dev:backend": "pnpm -C backend dev",
     "start:backend": "pnpm -C backend start",
     "dev:frontend": "pnpm -C frontend dev",
-    "start:frontend": "pnpm -C frontend start",
+    "build:frontend": "pnpm -C frontend build",
+    "start:frontend": "pnpm -C frontend preview",
     "migration:generate": "pnpm --filter backend run migration:generate",
     "migration:run": "pnpm -C backend migration:run"
   },
