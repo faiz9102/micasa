@@ -70,7 +70,7 @@ const PropertyDetails = () => {
         <InlineAlert variant="error" message="Property not found." />
         <Link
           to="/properties"
-          className="mt-6 inline-flex rounded-full border border-[var(--mc-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-primary)] transition hover:bg-[var(--mc-primary)] hover:text-white"
+          className="mt-6 inline-flex rounded-full border border-(--mc-primary) px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-(--mc-primary) transition hover:bg-(--mc-primary) hover:text-white"
         >
           Back to properties
         </Link>
@@ -90,19 +90,19 @@ const PropertyDetails = () => {
       <section className="mx-auto w-full max-w-6xl">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">Property</p>
-            <h1 className="mt-4 font-display text-4xl text-[var(--mc-text)]">{property.city}</h1>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--mc-muted)]">{property.description}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Property</p>
+            <h1 className="mt-4 font-display text-4xl text-(--mc-text)">{property.city}</h1>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-(--mc-muted)">{property.description}</p>
           </div>
-          <div className="rounded-[1.75rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] px-6 py-4 text-right shadow-sm backdrop-blur-xl">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-muted)]">Listing Price</p>
-            <p className="mt-2 font-display text-3xl text-[var(--mc-text)]">{formatCurrency(property.price)}</p>
+          <div className="rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) px-6 py-4 text-right shadow-sm backdrop-blur-xl">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-muted)">Listing Price</p>
+            <p className="mt-2 font-display text-3xl text-(--mc-text)">{formatCurrency(property.price)}</p>
           </div>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {(property.imageUrls || []).map((url, index) => (
-            <div key={url} className="overflow-hidden rounded-[1.75rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] shadow-sm backdrop-blur-xl">
+            <div key={url} className="overflow-hidden rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) shadow-sm backdrop-blur-xl">
               <img
                   src={url}
                   alt={`${property.city} ${index + 1}`}
@@ -111,7 +111,7 @@ const PropertyDetails = () => {
             </div>
           ))}
           {!property.imageUrls?.length && (
-            <div className="rounded-[1.75rem] border border-dashed border-[var(--mc-border)] p-10 text-sm text-[var(--mc-muted)] shadow-sm backdrop-blur-xl">
+            <div className="rounded-[1.75rem] border border-dashed border-(--mc-border) p-10 text-sm text-(--mc-muted) shadow-sm backdrop-blur-xl">
               No images available.
             </div>
           )}
@@ -125,29 +125,29 @@ const PropertyDetails = () => {
               {property.furnishingStatus ? <Badge label={furnishingLabels[property.furnishingStatus]} /> : null}
               {property.rentalScope ? <Badge label={rentalScopeLabels[property.rentalScope]} /> : null}
             </div>
-            <div className="grid gap-4 rounded-[1.75rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl md:grid-cols-2">
+            <div className="grid gap-4 rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl md:grid-cols-2">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">Area</p>
-                <p className="mt-2 text-lg text-[var(--mc-text)]">{formatNumber(property.area)} sq ft</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">Area</p>
+                <p className="mt-2 text-lg text-(--mc-text)">{formatNumber(property.area)} sq ft</p>
               </div>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">Bedrooms</p>
-                <p className="mt-2 text-lg text-[var(--mc-text)]">{property.bedrooms ?? 'N/A'}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">Bedrooms</p>
+                <p className="mt-2 text-lg text-(--mc-text)">{property.bedrooms ?? 'N/A'}</p>
               </div>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">Floor</p>
-                <p className="mt-2 text-lg text-[var(--mc-text)]">{property.floorNumber ?? 'N/A'}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">Floor</p>
+                <p className="mt-2 text-lg text-(--mc-text)">{property.floorNumber ?? 'N/A'}</p>
               </div>
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">Listing ID</p>
-                <p className="mt-2 break-all text-sm text-[var(--mc-text)]">{property.id}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">Listing ID</p>
+                <p className="mt-2 break-all text-sm text-(--mc-text)">{property.id}</p>
               </div>
             </div>
           </div>
           <div className="space-y-6">
-            <div className="rounded-[1.75rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">Amenities</p>
-              <ul className="mt-4 space-y-2 text-sm text-[var(--mc-text)]">
+            <div className="rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Amenities</p>
+              <ul className="mt-4 space-y-2 text-sm text-(--mc-text)">
                 {property.amenities?.length
                   ? property.amenities.map((amenity) => (
                       <li key={amenity}>• {amenity}</li>
@@ -156,11 +156,11 @@ const PropertyDetails = () => {
               </ul>
             </div>
 
-            <div className="rounded-[1.75rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">Seller</p>
-              <div className="mt-4 space-y-2 text-sm text-[var(--mc-text)]">
+            <div className="rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Seller</p>
+              <div className="mt-4 space-y-2 text-sm text-(--mc-text)">
                 <p>{owner?.name || 'Verified seller'}</p>
-                <p className="text-[var(--mc-muted)]">{contactEmail || 'Login to view contact details.'}</p>
+                <p className="text-(--mc-muted)">{contactEmail || 'Login to view contact details.'}</p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
                 <button
@@ -168,8 +168,8 @@ const PropertyDetails = () => {
                   onClick={handleFavorite}
                   className={`rounded-full border px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] transition ${
                     favorite
-                      ? 'border-[var(--mc-primary)] bg-[var(--mc-primary)] text-white'
-                      : 'border-[var(--mc-border)] bg-white/70 text-[var(--mc-text)] hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]'
+                      ? 'border-(--mc-primary) bg-(--mc-primary) text-white'
+                      : 'border-(--mc-border) bg-white/70 text-(--mc-text) hover:border-(--mc-primary) hover:text-(--mc-primary)'
                   }`}
                 >
                   {favorite ? 'Saved' : 'Add to favorites'}
@@ -177,14 +177,14 @@ const PropertyDetails = () => {
                 {contactEmail ? (
                   <a
                     href={contactHref}
-                    className="rounded-full border border-[var(--mc-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-primary)] transition hover:bg-[var(--mc-primary)] hover:text-white"
+                    className="rounded-full border border-(--mc-primary) px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-(--mc-primary) transition hover:bg-(--mc-primary) hover:text-white"
                   >
                     {contactLabel}
                   </a>
                 ) : (
                   <Link
                     to={contactHref}
-                    className="rounded-full border border-[var(--mc-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-primary)] transition hover:bg-[var(--mc-primary)] hover:text-white"
+                    className="rounded-full border border-(--mc-primary) px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-(--mc-primary) transition hover:bg-(--mc-primary) hover:text-white"
                   >
                     {contactLabel}
                   </Link>

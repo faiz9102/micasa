@@ -29,7 +29,7 @@ router.get(
     next();
   },
   roleBasedAccessControl([UserRole.ADMIN]),
-  () => getAccount()(req, res),
+  (req, res) => getAccount()(req, res),
 );
 
 router.put("/", validateAccountUpdateRequest, updateAccount);

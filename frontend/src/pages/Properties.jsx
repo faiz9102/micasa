@@ -94,7 +94,7 @@ const Properties = () => {
         />
         <form
           onSubmit={handleSubmit}
-          className="mt-10 grid gap-4 rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl md:grid-cols-3"
+          className="mt-10 grid gap-4 rounded-[2rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl md:grid-cols-3"
         >
           <InputField
             label="City"
@@ -148,14 +148,14 @@ const Properties = () => {
             <div className="flex flex-wrap gap-3">
               <button
                 type="submit"
-                className="rounded-full bg-[var(--mc-primary)] px-3 py-2 sm:px-6 sm:py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
+                className="rounded-full bg-(--mc-primary) px-3 py-2 sm:px-6 sm:py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-(--mc-primary-strong)"
               >
                 Apply Filters
               </button>
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="rounded-full border border-[var(--mc-border)] bg-white/70 px-3 py-2 sm:px-6 sm:py-3 text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]"
+                className="rounded-full border border-(--mc-border) bg-white/70 px-3 py-2 sm:px-6 sm:py-3 text-xs font-semibold uppercase tracking-[0.32em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
               >
                 Clear Filters
               </button>
@@ -172,8 +172,8 @@ const Properties = () => {
             {isBuyer && favoriteProperties.length ? (
               <div className="space-y-6">
                 <div className="flex flex-wrap items-center justify-between gap-4">
-                  <h2 className="font-display text-2xl text-[var(--mc-text)]">Your favorites</h2>
-                  <span className="text-xs font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">
+                  <h2 className="font-display text-2xl text-(--mc-text)">Your favorites</h2>
+                  <span className="text-xs font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">
                     {favoriteProperties.length} saved
                   </span>
                 </div>

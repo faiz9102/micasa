@@ -7,7 +7,7 @@ const DashboardLayout = ({ title, items }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen overflow-hidden text-[var(--mc-text)] md:grid md:grid-cols-[280px_1fr]">
+    <div className="relative min-h-screen overflow-hidden text-(--mc-text) md:grid md:grid-cols-[280px_1fr]">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(125,211,252,0.12),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(199,109,68,0.1),transparent_24%)]" />
 
       {/* Desktop sidebar */}
@@ -21,7 +21,7 @@ const DashboardLayout = ({ title, items }) => {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="rounded-full border border-[var(--mc-border)] bg-white/70 px-3 py-2 text-sm font-semibold"
+              className="rounded-full border border-(--mc-border) bg-white/70 px-3 py-2 text-sm font-semibold"
             >
               Menu
             </button>
@@ -37,11 +37,11 @@ const DashboardLayout = ({ title, items }) => {
       {/* Mobile sidebar drawer */}
       {open && (
         <div className="fixed inset-0 z-50 flex">
-          <div className="w-72 bg-[var(--mc-surface)] border-r border-[var(--mc-border)] p-6">
+          <div className="w-72 bg-(--mc-surface) border-r border-(--mc-border) p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-[var(--mc-accent)]">{title}</p>
-                <p className="mt-1 font-display text-lg text-[var(--mc-text)]">micasa</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-(--mc-accent)">{title}</p>
+                <p className="mt-1 font-display text-lg text-(--mc-text)">micasa</p>
               </div>
               <button type="button" onClick={() => setOpen(false)} className="px-2 py-1">Close</button>
             </div>
