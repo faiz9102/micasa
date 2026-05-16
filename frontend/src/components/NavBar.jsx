@@ -6,7 +6,7 @@ import { logout as logoutRequest } from '../services/authService.js';
 
 const navLinkClass = ({ isActive }) =>
   `text-[11px] font-semibold uppercase tracking-[0.32em] transition-colors ${
-    isActive ? 'text-[var(--mc-primary)]' : 'text-[var(--mc-muted)] hover:text-[var(--mc-text)]'
+    isActive ? 'text-(--mc-primary)' : 'text-(--mc-muted) hover:text-(--mc-text)'
   }`;
 
 const NavBar = () => {
@@ -34,9 +34,9 @@ const NavBar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--mc-border)] bg-[var(--mc-surface)]/90 backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 border-b border-(--mc-border) bg-(--mc-surface)/90 backdrop-blur-2xl">
       <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4">
-        <Link to="/" className="text-lg font-semibold uppercase tracking-[0.42em] text-[var(--mc-text)]">
+        <Link to="/" className="text-lg font-semibold uppercase tracking-[0.42em] text-(--mc-text)">
           micasa
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
@@ -46,16 +46,18 @@ const NavBar = () => {
           <NavLink to="/properties" className={navLinkClass}>
             Properties
           </NavLink>
-          <NavLink to="/login/buyer" className={navLinkClass}>
-            Login
-          </NavLink>
+          {!auth.isAuthenticated && (
+            <NavLink to="/login/buyer" className={navLinkClass}>
+              Login
+            </NavLink>
+          )}
         </nav>
         {/* Mobile menu button */}
         <button
           type="button"
           aria-label="Toggle menu"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex items-center gap-2 rounded-full border border-[var(--mc-border)] bg-white/70 p-2 md:hidden"
+          className="inline-flex items-center gap-2 rounded-full border border-(--mc-border) bg-white/70 p-2 md:hidden"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             {open ? (
@@ -71,7 +73,7 @@ const NavBar = () => {
               {dashboardPath ? (
                 <Link
                   to={dashboardPath}
-                  className="hidden rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)] md:inline-flex"
+                  className="hidden rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary) md:inline-flex"
                 >
                   Dashboard
                 </Link>
@@ -79,7 +81,7 @@ const NavBar = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="rounded-full bg-[var(--mc-primary)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[var(--mc-primary-strong)]"
+                className="rounded-full bg-(--mc-primary) px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-(--mc-primary-strong)"
               >
                 Logout
               </button>
@@ -88,13 +90,13 @@ const NavBar = () => {
             <>
               <Link
                 to="/login/buyer"
-                className="hidden rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)] md:inline-flex"
+                className="hidden rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary) md:inline-flex"
               >
                 Buyer Login
               </Link>
               <Link
                 to="/login/admin"
-                className="rounded-full bg-[var(--mc-primary)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[var(--mc-primary-strong)]"
+                className="rounded-full bg-(--mc-primary) px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-(--mc-primary-strong)"
               >
                 Admin
               </Link>
@@ -105,7 +107,7 @@ const NavBar = () => {
 
         {/* Mobile menu dropdown (positioned under header content) */}
         {open && (
-          <div className="md:hidden absolute left-0 right-0 top-full z-50 border-b border-[var(--mc-border)] bg-[var(--mc-surface)]/95 p-3 backdrop-blur-md">
+          <div className="md:hidden absolute left-0 right-0 top-full z-50 border-b border-(--mc-border) bg-(--mc-surface)/95 p-3 backdrop-blur-md">
             <nav className="flex flex-col gap-2">
               <NavLink to="/" className={navLinkClass} end onClick={() => setOpen(false)}>
                 Home
@@ -113,9 +115,11 @@ const NavBar = () => {
               <NavLink to="/properties" className={navLinkClass} onClick={() => setOpen(false)}>
                 Properties
               </NavLink>
-              <NavLink to="/login/buyer" className={navLinkClass} onClick={() => setOpen(false)}>
-                Login
-              </NavLink>
+              {!auth.isAuthenticated && (
+                <NavLink to="/login/buyer" className={navLinkClass} onClick={() => setOpen(false)}>
+                  Login
+                </NavLink>
+              )}
             </nav>
           </div>
         )}

@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 import InputField from '../components/InputField.jsx';
-import SelectField from '../components/SelectField.jsx';
 import InlineAlert from '../components/InlineAlert.jsx';
 import { createAccount } from '../services/accountService.js';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const auth = useSelector((state) => state.auth);
+  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    if (auth?.isAuthenticated) {
+      navigate('/');
+    }
+  }, [auth?.isAuthenticated]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -54,6 +61,7 @@ const Register = () => {
             </div>
           </div>
         </div>
+
         <div className="rounded-[1.75rem] border-(--mc-border) bg-white/85 p-6 shadow-sm dark:bg-(--mc-surface-strong)/35 md:p-8">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <InputField
@@ -82,7 +90,6 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-            {/* Role selection removed — registrations are users by default */}
             {error ? <InlineAlert variant="error" message={error} /> : null}
             {success ? <InlineAlert variant="success" message={success} /> : null}
             <button

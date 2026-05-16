@@ -1,6 +1,6 @@
 const InlineAlert = ({ variant = 'info', message }) => {
   const styles = {
-    info: 'border-[var(--mc-primary)]/20 bg-[var(--mc-primary)]/8 text-[var(--mc-primary)]',
+    info: 'border-(--mc-primary)/20 bg-(--mc-primary)/8 text-(--mc-primary)',
     error: 'border-rose-500/30 bg-rose-500/8 text-rose-700 dark:text-rose-200',
     success: 'border-emerald-500/30 bg-emerald-500/8 text-emerald-700 dark:text-emerald-200',
   };

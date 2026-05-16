@@ -55,7 +55,7 @@ const UserDashboard = () => {
           auth.loggedInAsSeller || auth.role === 'admin' ? (
             <Link
               to="/dashboard/user/properties/new"
-              className="rounded-full bg-[var(--mc-primary)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-[var(--mc-primary-strong)]"
+              className="rounded-full bg-(--mc-primary) px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-(--mc-primary-strong)"
             >
               Create listing
             </Link>
@@ -63,20 +63,20 @@ const UserDashboard = () => {
         }
       />
 
-      <div className="rounded-[2rem] border border-[var(--mc-border)] bg-[var(--mc-surface)] p-6 shadow-sm backdrop-blur-xl">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[var(--mc-accent)]">Profile</p>
+      <div className="rounded-[2rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Profile</p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">Name</p>
-            <p className="mt-2 text-sm text-[var(--mc-text)]">{auth.user?.name || '—'}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">Name</p>
+            <p className="mt-2 text-sm text-(--mc-text)">{auth.user?.name || '—'}</p>
           </div>
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">Email</p>
-            <p className="mt-2 text-sm text-[var(--mc-text)]">{auth.user?.email || '—'}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">Email</p>
+            <p className="mt-2 text-sm text-(--mc-text)">{auth.user?.email || '—'}</p>
           </div>
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-muted)]">Access</p>
-            <p className="mt-2 text-sm text-[var(--mc-text)]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">Access</p>
+            <p className="mt-2 text-sm text-(--mc-text)">
               {auth.role === 'admin' ? 'Admin' : auth.loggedInAsSeller ? 'Seller' : 'Buyer'}
             </p>
           </div>
@@ -85,11 +85,11 @@ const UserDashboard = () => {
 
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <h2 className="font-display text-2xl text-[var(--mc-text)]">Your listings</h2>
+          <h2 className="font-display text-2xl text-(--mc-text)">Your listings</h2>
           <button
             type="button"
             onClick={loadProperties}
-            className="rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)]"
+            className="rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text)"
           >
             Refresh
           </button>
@@ -103,7 +103,7 @@ const UserDashboard = () => {
                 <PropertyCard property={property} />
                 <Link
                   to={`/dashboard/user/properties/${property.id}/edit`}
-                  className="inline-flex rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)] transition hover:border-[var(--mc-primary)] hover:text-[var(--mc-primary)]"
+                  className="inline-flex rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
                 >
                   Edit listing
                 </Link>
@@ -131,11 +131,11 @@ const UserDashboard = () => {
       {isBuyer ? (
         <div className="space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <h2 className="font-display text-2xl text-[var(--mc-text)]">Saved favorites</h2>
+            <h2 className="font-display text-2xl text-(--mc-text)">Saved favorites</h2>
             <button
               type="button"
               onClick={refreshFavorites}
-              className="rounded-full border border-[var(--mc-border)] bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--mc-text)]"
+              className="rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text)"
             >
               Refresh
             </button>
