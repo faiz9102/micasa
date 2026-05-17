@@ -13,6 +13,7 @@ Base path is included in `BASE_URL` (should point to `/rest/v1`).
 - `POST /account` (register)
 - `GET /account` (admin list or by id in body)
 - `PUT /account` (update self)
+- `PATCH /account/:id/activate` (admin activate)
 - `DELETE /account/:id` (admin deactivate)
 - `DELETE /account` (self delete)
 

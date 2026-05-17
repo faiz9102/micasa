@@ -5,7 +5,10 @@ export const validatePropertyCreationRequest = (req, res, next) => {
   const result = propertySchema.safeParse(req.body);
 
   if (result.success) {
-    req.property = result.data;
+    req.property = {
+      ...result.data,
+      isActive: false,
+    };
     return next();
   }
 
@@ -53,6 +56,7 @@ export const requirePropertyOwnerOrAdmin = async (req, res, next) => {
 };
 
 export const validatePropertyUpdateRequest = async (req, res, next) => {
+  const user = req?.middleware?.user;
   const propertyId = req?.params?.id;
   const propertyResult = await getPropertyById(propertyId);
 
@@ -64,6 +68,10 @@ export const validatePropertyUpdateRequest = async (req, res, next) => {
     return res.status(500).json({ status: "fail", message: propertyResult.message });
   }
 
+  if (typeof req.body.isActive !== "undefined" && user?.role !== "admin") {
+    return res.status(403).json({ status: "fail", message: "Forbidden" });
+  }
+
   const existingProperty = propertyResult.property;
   const baseData = {
     propertyType: existingProperty.propertyType,
@@ -73,11 +81,11 @@ export const validatePropertyUpdateRequest = async (req, res, next) => {
     price: existingProperty.price,
     description: existingProperty.description,
     imageUrls: existingProperty.imageUrls,
-    amenities: existingProperty.amenities,
-    bedrooms: existingProperty.bedrooms,
-    furnishingStatus: existingProperty.furnishingStatus,
-    rentalScope: existingProperty.rentalScope,
-    floorNumber: existingProperty.floorNumber,
+    amenities: existingProperty.amenities ?? undefined,
+    bedrooms: existingProperty.bedrooms ?? undefined,
+    furnishingStatus: existingProperty.furnishingStatus ?? undefined,
+    rentalScope: existingProperty.rentalScope ?? undefined,
+    floorNumber: existingProperty.floorNumber ?? undefined,
     isActive: existingProperty.isActive,
   };
 

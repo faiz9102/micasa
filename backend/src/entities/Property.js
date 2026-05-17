@@ -90,7 +90,7 @@ const PropertySchema = new EntitySchema({
     },
     isActive: {
       type: "boolean",
-      default: true,
+      default: false,
     },
     createdAt: {
       type: "timestamp",

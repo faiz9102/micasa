@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import Badge from '../components/Badge.jsx';
 import InlineAlert from '../components/InlineAlert.jsx';
+import InputField from '../components/InputField.jsx';
 import { getProperty } from '../services/propertyService.js';
+import { createInquiry } from '../services/inquiryService.js';
 import { formatCurrency, formatNumber } from '../utils/format.js';
 import { isFavorite, toggleFavorite } from '../utils/favorites.js';
 import {
@@ -15,10 +18,19 @@ import {
 
 const PropertyDetails = () => {
   const { id } = useParams();
+  const auth = useSelector((state) => state.auth);
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [favorite, setFavorite] = useState(false);
+  const [inquiryForm, setInquiryForm] = useState({
+    requestedVisitDate: '',
+    requestedVisitTime: '',
+  });
+  const [inquiryLoading, setInquiryLoading] = useState(false);
+  const [inquiryError, setInquiryError] = useState('');
+  const [inquirySuccess, setInquirySuccess] = useState('');
+  const [inquiryStatus, setInquiryStatus] = useState('');
 
   useEffect(() => {
     const load = async () => {
@@ -46,6 +58,60 @@ const PropertyDetails = () => {
 
   const handleFavorite = () => {
     setFavorite(toggleFavorite(id));
+  };
+
+  const handleInquiryChange = (event) => {
+    const { name, value } = event.target;
+    setInquiryForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const formatInquiryError = (err, fallback) => {
+    const apiErrors = err?.response?.data?.errors;
+    if (Array.isArray(apiErrors) && apiErrors.length) {
+      return apiErrors.map((issue) => `${issue.field}: ${issue.message}`).join(' • ');
+    }
+
+    return err?.response?.data?.message || fallback;
+  };
+
+  const handleInquirySubmit = async (event) => {
+    event.preventDefault();
+    setInquiryError('');
+    setInquirySuccess('');
+    setInquiryStatus('');
+
+    const isBuyer = auth.isAuthenticated && auth.role !== 'admin' && !auth.loggedInAsSeller;
+    if (!isBuyer) {
+      setInquiryError('Please sign in as a buyer to submit an inquiry.');
+      return;
+    }
+
+    setInquiryLoading(true);
+    try {
+      const data = await createInquiry(id, inquiryForm);
+      const status = data?.inquiry?.status || 'new';
+      const statusLabel =
+        status === 'new'
+          ? 'New'
+          : status === 'contacted'
+          ? 'Contacted'
+          : status === 'scheduled_visit'
+          ? 'Scheduled Visit'
+          : status === 'closed'
+          ? 'Closed'
+          : status;
+      setInquiryStatus(statusLabel);
+      setInquirySuccess(`Inquiry submitted. Status: ${statusLabel}.`);
+      setInquiryForm({ requestedVisitDate: '', requestedVisitTime: '' });
+    } catch (err) {
+      if (err?.response?.status === 409) {
+        setInquiryError('An inquiry already exists for this property.');
+      } else {
+        setInquiryError(formatInquiryError(err, 'Unable to submit inquiry.'));
+      }
+    } finally {
+      setInquiryLoading(false);
+    }
   };
 
   if (loading) {
@@ -84,6 +150,7 @@ const PropertyDetails = () => {
     ? `mailto:${contactEmail}?subject=${encodeURIComponent(`Interested in ${property.city}`)}`
     : '/login/buyer';
   const contactLabel = contactEmail ? 'Contact seller' : 'Login to contact';
+  const isBuyer = auth.isAuthenticated && auth.role !== 'admin' && !auth.loggedInAsSeller;
 
   return (
     <div className="pt-16 md:pt-0 px-6 py-10 md:py-16">
@@ -100,25 +167,32 @@ const PropertyDetails = () => {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {(property.imageUrls || []).map((url, index) => (
-            <div key={url} className="overflow-hidden rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) shadow-sm backdrop-blur-xl">
-              <img
-                  src={url}
-                  alt={`${property.city} ${index + 1}`}
-                  className="h-44 md:h-60 w-full object-cover"
-                />
-            </div>
-          ))}
-          {!property.imageUrls?.length && (
-            <div className="rounded-[1.75rem] border border-dashed border-(--mc-border) p-10 text-sm text-(--mc-muted) shadow-sm backdrop-blur-xl">
-              No images available.
-            </div>
-          )}
+        <div className="mt-10 space-y-4">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Image Gallery</p>
+          <div className="grid gap-6 md:grid-cols-3">
+            {(property.imageUrls || []).map((url, index) => (
+              <div key={url} className="overflow-hidden rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) shadow-sm backdrop-blur-xl">
+                <img
+                    src={url}
+                    alt={`${property.city} ${index + 1}`}
+                    className="h-44 md:h-60 w-full object-cover"
+                  />
+              </div>
+            ))}
+            {!property.imageUrls?.length && (
+              <div className="rounded-[1.75rem] border border-dashed border-(--mc-border) p-10 text-sm text-(--mc-muted) shadow-sm backdrop-blur-xl">
+                No images available.
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="mt-12 grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Property Overview</p>
+              <p className="mt-2 text-sm text-(--mc-muted)">{property.description}</p>
+            </div>
             <div className="flex flex-wrap gap-3">
               <Badge label={purposeLabels[property.purpose]} />
               <Badge label={propertyTypeLabels[property.propertyType]} />
@@ -157,7 +231,7 @@ const PropertyDetails = () => {
             </div>
 
             <div className="rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Seller</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Contact / Inquiry</p>
               <div className="mt-4 space-y-2 text-sm text-(--mc-text)">
                 <p>{owner?.name || 'Verified seller'}</p>
                 <p className="text-(--mc-muted)">{contactEmail || 'Login to view contact details.'}</p>
@@ -190,6 +264,57 @@ const PropertyDetails = () => {
                   </Link>
                 )}
               </div>
+            </div>
+
+            <div className="rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Inquiry</p>
+              <p className="mt-2 text-sm text-(--mc-muted)">
+                Request a visit. Statuses include New, Contacted, Scheduled Visit, Closed.
+              </p>
+              {!isBuyer ? (
+                <div className="mt-4 space-y-3">
+                  <InlineAlert variant="info" message="Sign in as a buyer to submit an inquiry." />
+                  <Link
+                    to="/login/buyer"
+                    className="inline-flex rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
+                  >
+                    Login as buyer
+                  </Link>
+                </div>
+              ) : (
+                <form className="mt-4 space-y-4" onSubmit={handleInquirySubmit}>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <InputField
+                      label="Visit date"
+                      name="requestedVisitDate"
+                      type="date"
+                      value={inquiryForm.requestedVisitDate}
+                      onChange={handleInquiryChange}
+                      required
+                    />
+                    <InputField
+                      label="Visit time"
+                      name="requestedVisitTime"
+                      type="time"
+                      value={inquiryForm.requestedVisitTime}
+                      onChange={handleInquiryChange}
+                      required
+                    />
+                  </div>
+                  {inquiryError ? <InlineAlert variant="error" message={inquiryError} /> : null}
+                  {inquirySuccess ? <InlineAlert variant="success" message={inquirySuccess} /> : null}
+                  {inquiryStatus && !inquirySuccess ? (
+                    <InlineAlert variant="info" message={`Current status: ${inquiryStatus}`} />
+                  ) : null}
+                  <button
+                    type="submit"
+                    disabled={inquiryLoading}
+                    className="w-full rounded-full bg-(--mc-primary) px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-white transition hover:bg-(--mc-primary-strong) disabled:opacity-70"
+                  >
+                    {inquiryLoading ? 'Submitting...' : 'Submit inquiry'}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>

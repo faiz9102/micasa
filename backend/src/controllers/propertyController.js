@@ -54,7 +54,7 @@ export const listProperties = () => {
 export const getProperty = (id) => {
   return async (req, res) => {
     const viewer = req?.middleware?.user;
-    const result = await getPropertyByIdWithAccess(id, viewer?.id, viewer?.role);
+    const result = await (await import('../services/propertyService.js')).getPropertyByIdWithOwnerIfAllowed(id, viewer?.id, viewer?.role);
 
     if (!result.success && result.code === "NOT_FOUND") {
       return res.status(404).json({ status: "fail", message: result.message });

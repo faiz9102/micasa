@@ -22,14 +22,17 @@ const Properties = () => {
   });
   const [loading, setLoading] = useState(false);
   const [properties, setProperties] = useState([]);
-  const [favoriteIds, setFavoriteIds] = useState(() => getFavorites());
+  const favoriteIds = useMemo(
+    () => (auth.isAuthenticated ? getFavorites() : []),
+    [auth.isAuthenticated]
+  );
 
   const fetchProperties = async (query = {}) => {
     setLoading(true);
     try {
       const data = await listProperties(query);
       setProperties(data.properties || []);
-    } catch (error) {
+    } catch {
       setProperties([]);
     } finally {
       setLoading(false);
@@ -37,14 +40,12 @@ const Properties = () => {
   };
 
   useEffect(() => {
-    fetchProperties();
-  }, []);
+    const timeoutId = setTimeout(() => {
+      fetchProperties();
+    }, 0);
 
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      setFavoriteIds(getFavorites());
-    }
-  }, [auth.isAuthenticated]);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -94,7 +95,7 @@ const Properties = () => {
         />
         <form
           onSubmit={handleSubmit}
-          className="mt-10 grid gap-4 rounded-[2rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl md:grid-cols-3"
+          className="mt-10 grid gap-4 rounded-4xl border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl md:grid-cols-3"
         >
           <InputField
             label="City"

@@ -76,7 +76,7 @@ const CreateProperty = () => {
 
     try {
       await createProperty(payload);
-      setSuccess('Property created successfully.');
+      setSuccess('Property submitted for review.');
       setTimeout(() => navigate('/dashboard/user'), 900);
     } catch (err) {
       setError(formatApiError(err, 'Unable to create property. Check the form fields.'));

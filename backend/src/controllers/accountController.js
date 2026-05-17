@@ -5,6 +5,7 @@ import {
   getAllUsers,
   getUserById,
 } from "../services/userService.js";
+import { getAdminDashboardSummary } from "../services/adminDashboardService.js";
 
 /**
  * Fetches account information. If userId is provided, it fetches the specific user; otherwise, it retrieves all users.
@@ -109,5 +110,29 @@ export const deactivateAccount = function (userId) {
     }
 
     res.json({ status: "success", user: result.user });
+  };
+};
+
+export const activateAccount = function (userId) {
+  return async (req, res) => {
+    const result = await updateUser(userId, { isActive: true });
+
+    if (!result.success) {
+      return res.status(400).json({ status: "fail", message: result.message });
+    }
+
+    res.json({ status: "success", user: result.user });
+  };
+};
+
+export const getDashboardSummary = function () {
+  return async (req, res) => {
+    const result = await getAdminDashboardSummary();
+
+    if (!result.success) {
+      return res.status(500).json({ status: "fail", message: result.message });
+    }
+
+    return res.json({ status: "success", summary: result.summary, recentActivity: result.recentActivity });
   };
 };

@@ -15,6 +15,11 @@ export const deactivateAccount = async (id) => {
   return response.data;
 };
 
+export const activateAccount = async (id) => {
+  const response = await apiClient.patch(`/account/${id}/activate`);
+  return response.data;
+};
+
 export const deleteAccount = async () => {
   const response = await apiClient.delete('/account');
   return response.data;
@@ -22,5 +27,10 @@ export const deleteAccount = async () => {
 
 export const promoteUser = async (payload) => {
   const response = await apiClient.post('/account/promote', payload);
+  return response.data;
+};
+
+export const getAdminDashboardSummary = async () => {
+  const response = await apiClient.get('/account/dashboard/summary');
   return response.data;
 };

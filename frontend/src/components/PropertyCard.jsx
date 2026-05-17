@@ -1,11 +1,11 @@
 import { Link } from 'react-router';
 import { useEffect, useRef, useState } from 'react';
 import { formatCurrency } from '../utils/format.js';
+import Badge from './Badge.jsx';
 import { propertyTypeLabels, purposeLabels } from '../utils/property.js';
 
 const PropertyCard = ({ property }) => {
   const images = property?.imageUrls || [];
-  const cover = images[0];
   const [index, setIndex] = useState(0);
   const intervalRef = useRef(null);
 
@@ -50,7 +50,12 @@ const PropertyCard = ({ property }) => {
             No Image
           </div>
         )}
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-black/30 to-transparent" />
+        {!property?.isActive ? (
+          <div className="absolute left-4 top-4">
+            <Badge label="Pending review" />
+          </div>
+        ) : null}
 
         {/* Dots */}
         {images.length > 1 && (
@@ -60,7 +65,9 @@ const PropertyCard = ({ property }) => {
                 key={i}
                 onClick={() => setIndex(i)}
                 aria-label={`Show image ${i + 1}`}
-                className={`h-2 w-8 rounded-full transition-all ${i === index ? 'bg-[var(--mc-primary)] w-8' : 'bg-[var(--mc-border)] w-4'}`}
+                className={`h-2 w-8 rounded-full transition-all ${
+                  i === index ? 'bg-(--mc-primary) w-8' : 'bg-(--mc-border) w-4'
+                }`}
               />
             ))}
           </div>
@@ -82,7 +89,7 @@ const PropertyCard = ({ property }) => {
 
   if (!propertyId) {
     return (
-      <div className="group block overflow-hidden rounded-[2rem] border border-(--mc-border) bg-(--mc-surface) shadow-sm backdrop-blur-xl">
+      <div className="group block overflow-hidden rounded-4xl border border-(--mc-border) bg-(--mc-surface) shadow-sm backdrop-blur-xl">
         {content}
       </div>
     );
@@ -91,7 +98,7 @@ const PropertyCard = ({ property }) => {
   return (
     <Link
       to={`/properties/${propertyId}`}
-      className="group block overflow-hidden rounded-[2rem] border border-(--mc-border) bg-(--mc-surface) shadow-sm transition duration-300 hover:-translate-y-1 hover:border-(--mc-primary)/40 hover:shadow-(--mc-shadow) backdrop-blur-xl"
+      className="group block overflow-hidden rounded-4xl border border-(--mc-border) bg-(--mc-surface) shadow-sm transition duration-300 hover:-translate-y-1 hover:border-(--mc-primary)/40 hover:shadow-(--mc-shadow) backdrop-blur-xl"
     >
       {content}
     </Link>
