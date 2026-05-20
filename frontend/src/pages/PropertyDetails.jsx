@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
@@ -22,7 +22,7 @@ const PropertyDetails = () => {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [favorite, setFavorite] = useState(false);
+  const [favoriteVersion, setFavoriteVersion] = useState(0);
   const [inquiryForm, setInquiryForm] = useState({
     requestedVisitDate: '',
     requestedVisitTime: '',
@@ -42,7 +42,8 @@ const PropertyDetails = () => {
           throw new Error('Property not found');
         }
         setProperty(data.property);
-      } catch (err) {
+      } catch (error) {
+        void error;
         setError('Unable to load property. Please try again.');
       } finally {
         setLoading(false);
@@ -52,12 +53,9 @@ const PropertyDetails = () => {
     load();
   }, [id]);
 
-  useEffect(() => {
-    setFavorite(isFavorite(id));
-  }, [id]);
-
   const handleFavorite = () => {
-    setFavorite(toggleFavorite(id));
+    toggleFavorite(id);
+    setFavoriteVersion((prev) => prev + 1);
   };
 
   const handleInquiryChange = (event) => {
@@ -113,6 +111,11 @@ const PropertyDetails = () => {
       setInquiryLoading(false);
     }
   };
+
+  const favorite = useMemo(() => {
+    void favoriteVersion;
+    return isFavorite(id);
+  }, [id, favoriteVersion]);
 
   if (loading) {
     return (
@@ -199,6 +202,16 @@ const PropertyDetails = () => {
               {property.furnishingStatus ? <Badge label={furnishingLabels[property.furnishingStatus]} /> : null}
               {property.rentalScope ? <Badge label={rentalScopeLabels[property.rentalScope]} /> : null}
             </div>
+            <div className="rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Amenities</p>
+              <ul className="mt-4 space-y-2 text-sm text-(--mc-text)">
+                {property.amenities?.length
+                  ? property.amenities.map((amenity) => (
+                      <li key={amenity}>• {amenity}</li>
+                    ))
+                  : 'No amenities listed.'}
+              </ul>
+            </div>
             <div className="grid gap-4 rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl md:grid-cols-2">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-muted)">Area</p>
@@ -219,17 +232,6 @@ const PropertyDetails = () => {
             </div>
           </div>
           <div className="space-y-6">
-            <div className="rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Amenities</p>
-              <ul className="mt-4 space-y-2 text-sm text-(--mc-text)">
-                {property.amenities?.length
-                  ? property.amenities.map((amenity) => (
-                      <li key={amenity}>• {amenity}</li>
-                    ))
-                  : 'No amenities listed.'}
-              </ul>
-            </div>
-
             <div className="rounded-[1.75rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-sm backdrop-blur-xl">
               <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">Contact / Inquiry</p>
               <div className="mt-4 space-y-2 text-sm text-(--mc-text)">

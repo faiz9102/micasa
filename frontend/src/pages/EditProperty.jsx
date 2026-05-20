@@ -54,6 +54,7 @@ const EditProperty = () => {
           floorNumber: property.floorNumber ?? '',
         });
       } catch (err) {
+        void err;
         setError('Unable to load property.');
       } finally {
         setLoading(false);
