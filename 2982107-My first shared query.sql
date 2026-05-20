@@ -1,1 +1,1 @@
-SHOW
+SELECT * FROM users;
