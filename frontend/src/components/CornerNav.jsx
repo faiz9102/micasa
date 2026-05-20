@@ -8,7 +8,7 @@ const CornerNav = () => {
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-(--mc-border) bg-(--mc-surface) text-xs uppercase tracking-[0.2em] text-(--mc-primary) shadow-sm transition hover:border-(--mc-primary) hover:bg-white"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-(--mc-border-strong) bg-(--mc-accent) text-xs uppercase tracking-[0.2em] text-(--mc-button-text) shadow-sm transition hover:border-(--mc-primary) hover:bg-(--mc-primary) hover:text-white"
         aria-label="Go back"
         title="Back"
       >
@@ -17,7 +17,7 @@ const CornerNav = () => {
       <button
         type="button"
         onClick={() => navigate(1)}
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-(--mc-border) bg-(--mc-surface) text-xs uppercase tracking-[0.2em] text-(--mc-primary) shadow-sm transition hover:border-(--mc-primary) hover:bg-white"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-(--mc-border-strong) bg-(--mc-accent) text-xs uppercase tracking-[0.2em] text-(--mc-button-text) shadow-sm transition hover:border-(--mc-primary) hover:bg-(--mc-primary) hover:text-white"
         aria-label="Go forward"
         title="Forward"
       >

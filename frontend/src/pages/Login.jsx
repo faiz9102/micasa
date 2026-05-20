@@ -71,7 +71,7 @@ const Login = () => {
     <div className="pt-16 md:pt-0 px-6 py-10 md:py-16">
       <section className="mx-auto grid w-full max-w-6xl gap-10 rounded-[2rem] border border-(--mc-border) bg-(--mc-surface) p-6 shadow-(--mc-shadow) backdrop-blur-xl md:grid-cols-[1fr_1fr] md:p-10">
         <div className="space-y-6">
-          <div className="inline-flex rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-accent)">
+          <div className="inline-flex rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.34em] text-(--mc-button-text)">
             Secure access
           </div>
           <h1 className="font-display text-4xl text-(--mc-text)">{loginMeta.label} login</h1>
@@ -126,7 +126,7 @@ const Login = () => {
               <Link
                 key={linkRole}
                 to={`/login/${linkRole}`}
-                className="rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
+                className="rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-button-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
               >
                 {linkRole}
               </Link>

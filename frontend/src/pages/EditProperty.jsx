@@ -53,7 +53,8 @@ const EditProperty = () => {
           rentalScope: property.rentalScope ?? '',
           floorNumber: property.floorNumber ?? '',
         });
-      } catch (err) {
+      } catch (error) {
+        void error;
         setError('Unable to load property.');
       } finally {
         setLoading(false);

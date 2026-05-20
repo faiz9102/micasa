@@ -44,7 +44,7 @@ const DashboardSidebar = ({ items, title }) => {
       <button
         type="button"
         onClick={handleLogout}
-        className="rounded-full border border-(--mc-border) px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
+        className="rounded-full border border-(--mc-border-strong) bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-(--mc-button-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
       >
         Logout
       </button>

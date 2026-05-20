@@ -90,7 +90,7 @@ const NavBar = () => {
             <>
               <Link
                 to="/login/buyer"
-                className="hidden rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary) md:inline-flex"
+                className="hidden rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-(--mc-button-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary) md:inline-flex"
               >
                 Buyer Login
               </Link>

@@ -378,7 +378,12 @@ const AdminDashboard = () => {
             <form className="mt-4 flex flex-col sm:flex-row gap-2" onSubmit={handlePromote}>
               <InputField label="Email" name="email" type="email" value={promoteForm.email} onChange={(e) => setPromoteForm((p) => ({ ...p, email: e.target.value }))} />
               <InputField label="Name" name="name" value={promoteForm.name} onChange={(e) => setPromoteForm((p) => ({ ...p, name: e.target.value }))} />
-              <button type="submit" className="rounded-full border border-(--mc-border) px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text)">Promote</button>
+              <button
+                type="submit"
+                className="self-stretch rounded-2xl border border-(--mc-border-strong) bg-white/85 px-3 py-2 text-sm font-semibold uppercase tracking-[0.32em] text-(--mc-button-text) shadow-sm transition hover:border-(--mc-primary) hover:text-(--mc-primary) sm:self-end sm:px-4 sm:py-3"
+              >
+                Promote
+              </button>
             </form>
           </div>
           <div className="flex items-center justify-between">
@@ -418,7 +423,7 @@ const AdminDashboard = () => {
                   <button
                     type="button"
                     onClick={() => handleToggleActive(user)}
-                    className="rounded-full border border-(--mc-border) px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
+                    className="rounded-full border border-(--mc-border-strong) bg-white/85 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-button-text) shadow-sm transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
                   >
                     {user.isActive ? 'Deactivate' : 'Activate'}
                   </button>
@@ -506,7 +511,7 @@ const AdminDashboard = () => {
                   <button
                     type="button"
                     onClick={() => handleRemoveListing(property)}
-                    className="rounded-full border border-(--mc-border) px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
+                    className="rounded-full border border-(--mc-border-strong) bg-white/85 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-button-text) shadow-sm transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
                   >
                     Remove
                   </button>

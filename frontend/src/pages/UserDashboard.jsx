@@ -244,7 +244,7 @@ const UserDashboard = () => {
                 <PropertyCard property={property} />
                 <Link
                   to={`/dashboard/user/properties/${property.id}/edit`}
-                  className="inline-flex rounded-full border border-(--mc-border) bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-text) transition hover:border-(--mc-primary) hover:text-(--mc-primary)"
+                  className="inline-flex rounded-full border border-(--mc-border-strong) bg-(--mc-accent) px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.32em] text-(--mc-button-text) shadow-sm transition hover:border-(--mc-primary) hover:bg-(--mc-primary) hover:text-white"
                 >
                   Edit listing
                 </Link>
@@ -315,13 +315,13 @@ const UserDashboard = () => {
                         type="date"
                         value={form.scheduledVisitDate || ''}
                         onChange={(e) => handleInquiryFieldChange(inquiry.id, 'scheduledVisitDate', e.target.value)}
-                        className="rounded-2xl border border-(--mc-border) bg-white/80 px-3 py-2 text-sm"
+                        className="rounded-2xl border border-(--mc-border-strong) bg-white px-3 py-2 text-sm text-(--mc-button-text) shadow-sm focus:outline-none focus:ring-2 focus:ring-(--mc-primary)/40"
                       />
                       <input
                         type="time"
                         value={form.scheduledVisitTime || ''}
                         onChange={(e) => handleInquiryFieldChange(inquiry.id, 'scheduledVisitTime', e.target.value)}
-                        className="rounded-2xl border border-(--mc-border) bg-white/80 px-3 py-2 text-sm"
+                        className="rounded-2xl border border-(--mc-border-strong) bg-white px-3 py-2 text-sm text-(--mc-button-text) shadow-sm focus:outline-none focus:ring-2 focus:ring-(--mc-primary)/40"
                       />
                     </div>
 
