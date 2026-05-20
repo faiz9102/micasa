@@ -2,6 +2,7 @@
 @import "tailwindcss";
 @tailwind utilities;
 
+ /* Global styles and CSS variables for the application */
 :root {
 	color-scheme: dark;
 	--mc-bg: #0F2A1D;
