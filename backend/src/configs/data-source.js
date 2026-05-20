@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import Entities from "../entities/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,7 +18,7 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: process.env.NODE_ENV === "development", // Enable auto-sync only in development
   logging: false,
-  entities: [path.resolve(__dirname, "../entities/*.js")],
+  entities: Entities,
   migrations: [path.resolve(__dirname, "../../migrations/*.js")],
   ssl: {
     ca: process.env.DB_CA_CERT,
