@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/rest/v1';
+const baseURL = "micasa.backend.saqlainali.tech";
 const normalizedBaseURL = baseURL.replace(/\/+$/, '');
 
 const apiClient = axios.create({
