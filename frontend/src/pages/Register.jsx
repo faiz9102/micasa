@@ -5,7 +5,7 @@ import InputField from '../components/InputField.jsx';
 import InlineAlert from '../components/InlineAlert.jsx';
 import { createAccount } from '../services/accountService.js';
 
-const Register = () => {
+const Register = () =>  {
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
