@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = "micasa.backend.saqlainali.tech";
+const baseURL = "https://micasa.backend.saqlainali.tech";
 const normalizedBaseURL = baseURL.replace(/\/+$/, '');
 
 const apiClient = axios.create({
