@@ -1,8 +1,8 @@
 import AppDataSource from "../configs/data-source.js";
-import Property from "../entities/Property.js";
+import PropertySchema from "../entities/Property.js";
 import { Brackets } from "typeorm";
 
-export const PropertyRepository = AppDataSource.getRepository(Property).extend({
+export const PropertyRepository = AppDataSource.getRepository(PropertySchema).extend({
   async createProperty(propertyData) {
     const property = this.create(propertyData);
     return this.save(property);

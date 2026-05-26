@@ -1,7 +1,7 @@
 import AppDataSource from "../configs/data-source.js";
-import Inquiry from "../entities/Inquiry.js";
+import InquirySchema from "../entities/Inquiry.js";
 
-export const InquiryRepository = AppDataSource.getRepository(Inquiry).extend({
+export const InquiryRepository = AppDataSource.getRepository(InquirySchema).extend({
   async createInquiry(inquiryData) {
     const inquiry = this.create(inquiryData);
     return this.save(inquiry);

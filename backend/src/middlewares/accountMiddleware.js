@@ -1,6 +1,6 @@
 import userschema from "@micasa/shared/validations/user.schema.js";
 import AppDataSource from "../configs/data-source.js";
-import User, { UserRole } from "../entities/User.js";
+import UserSchema, { UserRole } from "../entities/User.js";
 import { UserRepository } from "../repositories/userRepository.js";
 
 export const validateUserAccountCreationRequest = async (req, res, next) => {
@@ -28,7 +28,7 @@ export const validateAccountUpdateRequest = (req, res, next) => {
   }
 
   try {
-    const user = AppDataSource.getRepository(User).findOneBy({ id });
+    const user = AppDataSource.getRepository(UserSchema).findOneBy({ id });
     if (!user) {
       res.status(404).json({ status: "fail", message: "User not found" });
     }

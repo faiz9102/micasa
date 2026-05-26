@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "seed": "node scripts/create-admin.js",
     "migration:generate": "node scripts/generate-migration.js",
     "migration:run": "typeorm migration:run -d src/configs/data-source.js"
   },

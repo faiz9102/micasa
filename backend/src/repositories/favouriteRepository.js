@@ -1,7 +1,7 @@
 import AppDataSource from "../configs/data-source.js";
-import Favourite from "../entities/Favourites.js";
+import FavouriteSchema from "../entities/Favourites.js";
 
-export const FavouriteRepository = AppDataSource.getRepository(Favourite).extend({
+export const FavouriteRepository = AppDataSource.getRepository(FavouriteSchema).extend({
   async createFavourite(propertyId, userId) {
     const favourite = this.create({ userId, propertyId });
     return this.save(favourite);

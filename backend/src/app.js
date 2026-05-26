@@ -9,10 +9,21 @@ const app = express();
 
 // --- Global Middlewares ---
 app.use(loggerMiddleware);
-app.use(cors({
-    origin: [/^http:\/\/localhost:\d+$/],
+
+const isDev = process.env.NODE_ENV !== "production";
+
+app.use(
+  cors({
+    origin: isDev
+      ? [/^http:\/\/localhost:\d+$/]
+      : [
+          "https://frontend.micasa.saqlainali.tech",
+          "https://micasa-frontend-two.vercel.app",
+        ],
     credentials: true,
-}));
+  })
+);
+
 app.use(cookieParser());
 app.use(express.json()); // Body parser for JSON
 app.use(express.urlencoded({ extended: true }));

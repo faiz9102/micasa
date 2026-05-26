@@ -1,7 +1,7 @@
 import AppDataSource from "../configs/data-source.js";
-import Users, { UserRole } from "../entities/User.js";
+import UserSchema, { UserRole } from "../entities/User.js";
 
-export const UserRepository = AppDataSource.getRepository(Users).extend({
+export const UserRepository = AppDataSource.getRepository(UserSchema).extend({
   async emailExists(email) {
     const user = await this.findOne({ where: { email } });
     return !!user;
