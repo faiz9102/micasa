@@ -21,14 +21,20 @@ export const REFRESH_TOKEN_COOKIE_OPTIONS = {
 
 export const authAccessMiddleware = (req, res, next) => {
   try {
-    const accessToken = getCookie(req, ACCESS_TOKEN_COOKIE_NAME) || parseBearerToken(req);
+    const cookieToken = getCookie(req, ACCESS_TOKEN_COOKIE_NAME);
+    const bearerToken = parseBearerToken(req);
+    let decoded = null;
 
-    if (accessToken) {
-      const decoded = verifyToken(accessToken, process.env.JWT_SECRET);
+    if (cookieToken) {
+      decoded = verifyToken(cookieToken, process.env.JWT_SECRET);
+    }
 
-      if (decoded) {
-        req.middleware = { user: decoded };
-      }
+    if (!decoded && bearerToken) {
+      decoded = verifyToken(bearerToken, process.env.JWT_SECRET);
+    }
+
+    if (decoded) {
+      req.middleware = { user: decoded };
     }
   } catch (err) {
   } finally {
